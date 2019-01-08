@@ -34,10 +34,10 @@ public class UserEntity {
     @Column(name = "wechat")
     String weChat;
 
-    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator")
     Set<ActivityEntity> createdActivityList;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
             joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))

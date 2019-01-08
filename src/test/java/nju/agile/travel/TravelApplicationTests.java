@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,11 +38,13 @@ public class TravelApplicationTests {
     }
 
     @Test
+    @Transactional
     public void testUserRepo(){
         System.out.println(userRepo.findAll());
     }
 
     @Test
+    @Transactional
     public void testActivityRepo(){
         System.out.println(activityRepo.findAll());
     }

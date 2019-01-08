@@ -41,7 +41,7 @@ public class ActivityEntity {
     @JoinColumn(name = "t_user_id")
     UserEntity creator;
 
-    @ManyToMany(mappedBy = "joinedActivityList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "joinedActivityList")
     Set<UserEntity> participants;
 
     @Override
