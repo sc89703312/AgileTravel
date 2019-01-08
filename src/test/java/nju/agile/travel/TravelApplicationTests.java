@@ -1,5 +1,7 @@
 package nju.agile.travel;
 
+import nju.agile.travel.dao.ActivityRepo;
+import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.service.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +19,12 @@ public class TravelApplicationTests {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    UserRepo userRepo;
+
+    @Autowired
+    ActivityRepo activityRepo;
+
     @Test
     public void contextLoads() {
     }
@@ -28,5 +36,14 @@ public class TravelApplicationTests {
         mailService.sendEmail(toAddress, content);
     }
 
+    @Test
+    public void testUserRepo(){
+        System.out.println(userRepo.findAll());
+    }
+
+    @Test
+    public void testActivityRepo(){
+        System.out.println(activityRepo.findAll());
+    }
 }
 
