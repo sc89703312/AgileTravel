@@ -51,26 +51,29 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        String result = String.format(
+        StringBuilder buf = new StringBuilder();
+
+        buf.append(String.format(
                 "User[id=%d, name='%s', mail='%s', password='%s', avatarUrl='%s', check=%d, wechat='%s']%n",
-                id, name, mail, password, avatarUrl, check, weChat);
+                id, name, mail, password, avatarUrl, check, weChat));
+
         if (createdActivityList != null) {
             for(ActivityEntity activity : createdActivityList) {
-                result += String.format(
+                buf.append(String.format(
                         "CreatedActivity[id=%d, name='%s']%n",
-                        activity.getId(), activity.getName());
+                        activity.getId(), activity.getName()));
             }
         }
 
         if (joinedActivityList != null) {
             for(ActivityEntity activity : joinedActivityList) {
-                result += String.format(
+                buf.append(String.format(
                         "JoinedActivity[id=%d, name='%s']%n",
-                        activity.getId(), activity.getName());
+                        activity.getId(), activity.getName()));
             }
         }
 
-        return result;
+        return buf.toString();
     }
 
 }

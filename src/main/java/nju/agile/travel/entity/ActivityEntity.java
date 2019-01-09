@@ -50,33 +50,35 @@ public class ActivityEntity {
 
     @Override
     public String toString() {
-        String result = String.format(
+        StringBuilder buf = new StringBuilder();
+
+        buf.append(String.format(
                 "Activity[id=%d, name='%s', description='%s', location='%s', start_time='%s', end_time='%s', banner_url='%s', check=%d]%n",
-                id, name, description, location, startTime.toString(), endTime.toString(), bannerUrl, check);
+                id, name, description, location, startTime.toString(), endTime.toString(), bannerUrl, check));
 
         if (creator != null) {
-            result += String.format(
+            buf.append(String.format(
                     "Creator[id=%d, name='%s']%n",
-                    creator.getId(), creator.getName());
+                    creator.getId(), creator.getName()));
         }
 
         if (participants != null) {
             for(UserEntity participant : participants) {
-                result += String.format(
+                buf.append(String.format(
                         "Participant[id=%d, name='%s']%n",
-                        participant.getId(), participant.getName());
+                        participant.getId(), participant.getName()));
             }
         }
 
         if (posts != null) {
             for(PostEntity post : posts) {
-                result += String.format(
+                buf.append(String.format(
                         "Post[id=%d, content='%s']%n",
-                        post.getId(), post.getContent());
+                        post.getId(), post.getContent()));
             }
         }
 
-        return result;
+        return buf.toString();
     }
 
 }

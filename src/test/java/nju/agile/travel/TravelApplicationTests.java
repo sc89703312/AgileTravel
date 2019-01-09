@@ -43,12 +43,12 @@ public class TravelApplicationTests {
     public void contextLoads() {
     }
 
-    @Test
-    public void testSendMail() {
-        String toAddress = "MF1832136@smail.nju.edu.cn";
-        String content = "中文";
-        mailService.sendEmail(toAddress, content);
-    }
+//    @Test
+//    public void testSendMail() {
+//        String toAddress = "MF1832136@smail.nju.edu.cn";
+//        String content = "中文";
+//        mailService.sendEmail(toAddress, content);
+//    }
 
     @Test
     @Transactional
