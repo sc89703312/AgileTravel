@@ -13,7 +13,7 @@ import java.util.Set;
  */
 @Entity(name = "t_activity")
 @Data
-@EqualsAndHashCode(exclude = {"participants"})
+@EqualsAndHashCode(exclude = {"participants", "posts"})
 public class ActivityEntity {
 
     @Id
@@ -44,6 +44,9 @@ public class ActivityEntity {
     @ManyToMany(mappedBy = "joinedActivityList")
     Set<UserEntity> participants;
 
+    @OneToMany(mappedBy = "belongedActivity")
+    Set<PostEntity> posts;
+
     @Override
     public String toString() {
         String result = String.format(
@@ -61,6 +64,14 @@ public class ActivityEntity {
                 result += String.format(
                         "Participant[id=%d, name='%s']%n",
                         participant.getId(), participant.getName());
+            }
+        }
+
+        if (posts != null) {
+            for(PostEntity post : posts) {
+                result += String.format(
+                        "Post[id=%d, content='%s']%n",
+                        post.getId(), post.getContent());
             }
         }
 

@@ -1,6 +1,8 @@
 package nju.agile.travel;
 
 import nju.agile.travel.dao.ActivityRepo;
+import nju.agile.travel.dao.PostRepo;
+import nju.agile.travel.dao.ShareRepo;
 import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.service.MailService;
 import org.junit.Test;
@@ -26,6 +28,12 @@ public class TravelApplicationTests {
     @Autowired
     ActivityRepo activityRepo;
 
+    @Autowired
+    PostRepo postRepo;
+
+    @Autowired
+    ShareRepo shareRepo;
+
     @Test
     public void contextLoads() {
     }
@@ -47,6 +55,18 @@ public class TravelApplicationTests {
     @Transactional
     public void testActivityRepo(){
         System.out.println(activityRepo.findAll());
+    }
+
+    @Test
+    @Transactional
+    public void testPostRepo(){
+        System.out.println(postRepo.findAll());
+    }
+
+    @Test
+    @Transactional
+    public void testShareRepo(){
+        System.out.println(shareRepo.findAll());
     }
 }
 
