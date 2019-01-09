@@ -35,6 +35,7 @@ public class ActivityEntity {
     @Column(name = "banner_url")
     String bannerUrl;
 
+    @Column(name = "[check]")
     int check;
 
     @ManyToOne

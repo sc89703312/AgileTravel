@@ -3,6 +3,7 @@ package nju.agile.travel.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,11 +25,14 @@ public class UserEntity {
 
     String mail;
 
+    @ColumnTransformer(read = "CAST(AES_DECRYPT(password, '$*^@!#') as char(1000))",
+            write = "AES_ENCRYPT(?, '$*^@!#')" )
     String password;
 
     @Column(name = "avatar_url")
     String avatarUrl;
 
+    @Column(name = "[check]")
     int check;
 
     @Column(name = "wechat")

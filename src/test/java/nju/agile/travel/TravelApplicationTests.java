@@ -4,6 +4,8 @@ import nju.agile.travel.dao.ActivityRepo;
 import nju.agile.travel.dao.PostRepo;
 import nju.agile.travel.dao.ShareRepo;
 import nju.agile.travel.dao.UserRepo;
+import nju.agile.travel.model.RegisterParam;
+import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,9 @@ public class TravelApplicationTests {
 
     @Autowired
     ShareRepo shareRepo;
+
+    @Autowired
+    AuthService authService;
 
     @Test
     public void contextLoads() {
@@ -67,6 +72,12 @@ public class TravelApplicationTests {
     @Transactional
     public void testShareRepo(){
         System.out.println(shareRepo.findAll());
+    }
+
+    @Test
+    public void testAuthService(){
+        RegisterParam param = new RegisterParam("sc89703312@qq.com", "hehe", "1", "1");
+        System.out.println(authService.register(param));
     }
 }
 
