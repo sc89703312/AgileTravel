@@ -76,7 +76,7 @@ public class TravelApplicationTests {
 
     @Test
     public void testAuthService(){
-        RegisterParam param = new RegisterParam("sc89703312@qq.com", "hehe", "1", "1");
+        RegisterParam param = new RegisterParam("2271642660@qq.com", "hehe", "qwer@1213d2_", "1");
         System.out.println(authService.register(param));
     }
 }

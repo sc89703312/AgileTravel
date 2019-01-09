@@ -6,4 +6,5 @@ package nju.agile.travel.util;
 public class Constants {
     public static final Integer ACCOUNT_ON = 1;
     public static final Integer ACCOUNT_OFF = 0;
+    public static final String KEY = "$*^@!#";
 }
