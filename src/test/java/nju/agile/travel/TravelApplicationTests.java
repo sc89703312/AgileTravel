@@ -5,6 +5,7 @@ import nju.agile.travel.dao.PostRepo;
 import nju.agile.travel.dao.ShareRepo;
 import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.model.RegisterParam;
+import nju.agile.travel.service.ActivityCURDService;
 import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
 import nju.agile.travel.util.Base64Util;
@@ -39,6 +40,9 @@ public class TravelApplicationTests {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
+    ActivityCURDService activityCURDService;
 
     @Value("${check.host}")
     String serverHost;
@@ -102,6 +106,12 @@ public class TravelApplicationTests {
     @Test
     public void testAccountCheck(){
        authService.check(5,"NSAyMDE5LTAxLTEwIDE1OjI3OjI5");
+    }
+
+    @Test
+    public void testActivityCURDService() {
+        System.out.println(activityCURDService.queryActivityPage(0));
+        System.out.println(activityCURDService.queryCreatedActivity(1));
     }
 }
 
