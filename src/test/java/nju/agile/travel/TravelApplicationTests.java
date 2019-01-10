@@ -116,10 +116,12 @@ public class TravelApplicationTests {
     public void testActivityCURDService() {
         ActivityInfoParam param =
                 new ActivityInfoParam("activity by test", "something", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "url", 1);
+                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "url",
+                        true, 1);
         ActivityInfoParam newParam =
                 new ActivityInfoParam("activity by test", "another thing", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "another url", 1);
+                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "another url",
+                        false, 1);
         activityCURDService.createActivity(param);
         int activityID = activityCURDService.createActivity(param);
         activityCURDService.editActivity(activityID, newParam);

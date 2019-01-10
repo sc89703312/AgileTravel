@@ -22,6 +22,8 @@ public class ActivityInfoParam {
 
     String bannerUrl;
 
+    boolean isPublic;
+
     int creatorID;
 
     public ActivityInfoParam(
@@ -31,6 +33,7 @@ public class ActivityInfoParam {
             Date startTime,
             Date endTime,
             String bannerUrl,
+            boolean isPublic,
             int creatorID) {
         this.name = name;
         this.description = description;
@@ -38,6 +41,7 @@ public class ActivityInfoParam {
         this.startTime = startTime;
         this.endTime = endTime;
         this.bannerUrl = bannerUrl;
+        this.isPublic = isPublic;
         this.creatorID = creatorID;
     }
 

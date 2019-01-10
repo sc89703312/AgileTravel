@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ActivityRepo extends JpaRepository<ActivityEntity, Integer> {
 
-    Page<ActivityEntity> findByCheck(int check, Pageable pageable);
+    Page<ActivityEntity> findByCheckAndAccess(int check, int access, Pageable pageable);
 
 }

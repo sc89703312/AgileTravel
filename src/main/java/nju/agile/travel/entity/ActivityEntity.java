@@ -38,6 +38,12 @@ public class ActivityEntity {
     @Column(name = "[check]")
     int check;
 
+    @Column(name = "access")
+    int access;
+
+    @Column(name = "invited_at")
+    Date invitedAt;
+
     @ManyToOne
     @JoinColumn(name = "t_user_id")
     UserEntity creator;

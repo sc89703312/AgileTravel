@@ -31,7 +31,7 @@ public class ActivityCURDService {
 
     public List<ActivityBaseVO> queryActivityPage(int pageIndex) {
         return activityRepo
-                .findByCheck(Constants.ACTIVITY_ON, PageRequest.of(pageIndex, Constants.PAGE_SIZE))
+                .findByCheckAndAccess(Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC, PageRequest.of(pageIndex, Constants.PAGE_SIZE))
                 .map(ActivityBaseVO::new)
                 .getContent();
     }
@@ -81,6 +81,7 @@ public class ActivityCURDService {
         entity.setStartTime(param.getStartTime());
         entity.setEndTime(param.getEndTime());
         entity.setBannerUrl(param.getBannerUrl());
+        entity.setAccess(param.isPublic() ? Constants.ACTIVITY_PUBLIC : Constants.ACTIVITY_PRIVATE);
         return entity;
     }
 
