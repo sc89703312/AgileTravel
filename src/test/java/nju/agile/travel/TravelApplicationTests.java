@@ -7,6 +7,7 @@ import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.model.RegisterParam;
 import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
+import nju.agile.travel.util.Base64Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,16 @@ public class TravelApplicationTests {
     @Autowired
     AuthService authService;
 
+    @Value("${check.host}")
+    String serverHost;
+
+    @Value("${check.port}")
+    Integer serverPort;
+
     @Test
     public void contextLoads() {
+        System.out.println(serverHost);
+        System.out.println(serverPort);
     }
 
 //    @Test
@@ -76,8 +85,23 @@ public class TravelApplicationTests {
 
     @Test
     public void testAuthService(){
-        RegisterParam param = new RegisterParam("2271642660@qq.com", "hehe", "qwer@1213d2_", "1");
-        System.out.println(authService.register(param));
+        RegisterParam param = new RegisterParam("sc89703312@qq.com", "echo", "123456", "1");
+        authService.register(param);
+    }
+
+    @Test
+    public void testBase64(){
+//        String encodedStr = Base64Util.encode(1, "2019-01-09 11:11:11");
+        String encodedStr = "NSAyMDE5LTAxLTEwIDE0OjQwOjMz";
+        System.out.println(encodedStr);
+
+        String decodedStr = Base64Util.decode(encodedStr);
+        System.out.println(decodedStr);
+    }
+
+    @Test
+    public void testAccountCheck(){
+       authService.check(5,"NSAyMDE5LTAxLTEwIDE1OjI3OjI5");
     }
 }
 

@@ -7,6 +7,7 @@ import nju.agile.travel.util.Constants;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,9 @@ public class UserEntity {
 
     @Column(name = "wechat")
     String weChat;
+
+    @Column(name = "created_at")
+    Date createdAt;
 
     @OneToMany(mappedBy = "creator")
     Set<ActivityEntity> createdActivityList;
