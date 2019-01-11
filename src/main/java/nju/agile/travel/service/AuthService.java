@@ -33,7 +33,31 @@ public class AuthService {
     Integer serverPort;
 
     public void register(RegisterParam param){
+        UserEntity userEntity = buildUserEntity(param);
+        sendCheckMail(userEntity);
+    }
 
+    public int check(Integer id, String encodedCheckStr){
+        return userRepo
+                .findById(id)
+                .map(userEntity -> {
+                    Integer userId = userEntity.getId();
+                    String userCreatedAtStr = DateUtil.dateToString(userEntity.getCreatedAt());
+                    String userEncodedCheckStr = Base64Util.encode(userId, userCreatedAtStr);
+
+                    if(userEncodedCheckStr.equals(encodedCheckStr)){
+                        userEntity.setCheck(Constants.ACCOUNT_ON);
+                        userRepo.save(userEntity);
+                    }else{
+                        throw new RuntimeException("激活码已失效，请重新注册");
+                    }
+
+                    return userEntity.getId();
+                })
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+    }
+
+    private UserEntity buildUserEntity(RegisterParam param){
         UserEntity userEntity = getUncheckedAccount(param.getMail());
         userEntity.setAvatarUrl(param.getAvatarUrl());
         userEntity.setMail(param.getMail());
@@ -42,51 +66,30 @@ public class AuthService {
         userEntity.setCheck(Constants.ACCOUNT_OFF);
         userEntity.setWeChat("");
         userEntity.setCreatedAt(DateUtil.getCurrentRoundDate());
+
         userRepo.save(userEntity);
 
-        Integer userId = userEntity.getId();
-        String userMail = userEntity.getMail();
-        String userCreatedAtStr = DateUtil.dateToString(userEntity.getCreatedAt());
-        System.out.println(userCreatedAtStr);
-        sendCheckMail(userMail, userId, userCreatedAtStr);
-    }
-
-    public void check(Integer id, String encodedCheckStr){
-        Optional<UserEntity> optional = userRepo.findById(id);
-        if(optional.isPresent()){
-            UserEntity user = optional.get();
-            Integer userId = user.getId();
-            String userCreatedAtStr = DateUtil.dateToString(user.getCreatedAt());
-            String userEncodedCheckStr = Base64Util.encode(userId, userCreatedAtStr);
-
-            System.out.println("userId: " + userId +" createdAt: " + userCreatedAtStr);
-            System.out.println("check: " + userEncodedCheckStr);
-
-            if(userEncodedCheckStr.equals(encodedCheckStr)){
-                user.setCheck(Constants.ACCOUNT_ON);
-                userRepo.save(user);
-            }else{
-                throw new RuntimeException("激活码已失效，请重新注册");
-            }
-
-        }else{
-            throw new RuntimeException("用户ID不存在");
-        }
+        return userEntity;
     }
 
     private UserEntity getUncheckedAccount(String mail){
-        UserEntity user = userRepo.findByMail(mail);
-        if(user == null){
-            return new UserEntity();
-        }else{
-            if(user.getCheck() == 1){
-                throw new RuntimeException("该邮箱已注册");
-            }
-            return user;
-        }
+        return userRepo
+                .findByMail(mail)
+                .map(userEntity -> {
+                    if(userEntity.getCheck() == Constants.ACCOUNT_ON){
+                        throw new RuntimeException("该邮箱已注册");
+                    }else{
+                        return userEntity;
+                    }
+                })
+                .orElseGet(UserEntity::new);
     }
 
-    private void sendCheckMail(String mail, Integer id, String createdAtStr){
+    private void sendCheckMail(UserEntity userEntity){
+        Integer id = userEntity.getId();
+        String mail = userEntity.getMail();
+        String createdAtStr = DateUtil.dateToString(userEntity.getCreatedAt());
+
         String encodedCheck = Base64Util.encode(id, createdAtStr);
         String checkUrl = String.format("http://%s:%d/user/check?id=%d&check=%s",
                 serverHost, serverPort, id, encodedCheck);

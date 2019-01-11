@@ -109,7 +109,7 @@ public class TravelApplicationTests {
 
     @Test
     public void testAccountCheck(){
-       authService.check(5,"NSAyMDE5LTAxLTEwIDE1OjM0OjAy");
+       authService.check(9,"OSAyMDE5LTAxLTExIDE1OjA3OjM3");
     }
 
     @Test
