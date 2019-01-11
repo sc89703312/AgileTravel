@@ -51,16 +51,15 @@ public class ActivityCURDService {
     @Transactional
     public int createActivity(ActivityInfoParam param) {
         ActivityEntity entity = new ActivityEntity();
-        Optional<UserEntity> optionalUser = userRepo.findById(param.getCreatorID());
-        if (optionalUser.isPresent()) {
-            entity.setCreator(optionalUser.get());
-        }
-        else {
-            throw new RuntimeException("用户ID不存在");
-        }
-        entity.setCheck(Constants.ACTIVITY_ON);
-        activityRepo.save(buildActivityEntity(entity, param));
-        return entity.getId();
+
+        return userRepo.findById(param.getCreatorID())
+                .map(userEntity -> {
+                    entity.setCreator(userEntity);
+                    entity.setCheck(Constants.ACTIVITY_ON);
+                    activityRepo.save(buildActivityEntity(entity, param));
+                    return entity.getId();
+                })
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
     }
 
     @Transactional
