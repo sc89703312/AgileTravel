@@ -6,6 +6,7 @@ import nju.agile.travel.model.RegisterParam;
 import nju.agile.travel.util.Base64Util;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
+import nju.agile.travel.vo.UserBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -55,6 +56,19 @@ public class AuthService {
                     return userEntity.getId();
                 })
                 .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+    }
+
+    public UserBaseVO login(String mail, String password){
+        return userRepo
+                .findByMailAndPassword(mail, password)
+                .map(userEntity -> {
+                    if(userEntity.getCheck() == Constants.ACCOUNT_OFF){
+                        throw new RuntimeException("该邮箱未激活");
+                    }else{
+                        return new UserBaseVO(userEntity);
+                    }
+                })
+                .orElseThrow(() -> new RuntimeException("邮箱或密码错误"));
     }
 
     private UserEntity buildUserEntity(RegisterParam param){
