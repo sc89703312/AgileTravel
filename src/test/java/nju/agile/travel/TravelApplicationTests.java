@@ -127,6 +127,7 @@ public class TravelApplicationTests {
         activityCURDService.editActivity(activityID, newParam);
         System.out.println(activityCURDService.queryActivityPage(0));
         System.out.println(activityCURDService.queryCreatedActivity(1));
+        System.out.println(activityCURDService.queryJoinedActivity(1));
     }
 }
 
