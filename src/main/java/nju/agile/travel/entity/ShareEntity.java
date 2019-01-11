@@ -20,8 +20,8 @@ public class ShareEntity {
 
     String content;
 
-    @Column(name = "image_url")
-    String imageUrl;
+    @Column(name = "image_urls")
+    String imageUrls;
 
     @ManyToOne
     @JoinColumn(name = "t_user_id")
@@ -34,8 +34,8 @@ public class ShareEntity {
     @Override
     public String toString() {
         String result = String.format(
-                "Share[id=%d, content='%s', time='%s']%n",
-                id, content, timestamps);
+                "Share[id=%d, content='%s', image_urls='%s', time='%s']%n",
+                id, content, imageUrls, timestamps);
 
         result += String.format(
                 "Author[id=%d, name='%s']%n",

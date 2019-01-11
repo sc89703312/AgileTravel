@@ -20,6 +20,9 @@ public class PostEntity {
 
     String content;
 
+    @Column(name = "image_urls")
+    String imageUrls;
+
     @ManyToOne
     @JoinColumn(name = "t_user_id")
     UserEntity author;
@@ -31,8 +34,8 @@ public class PostEntity {
     @Override
     public String toString() {
         String result = String.format(
-                "Post[id=%d, content='%s', time='%s']%n",
-                id, content, timestamps);
+                "Post[id=%d, content='%s', image_urls='%s', time='%s']%n",
+                id, content, imageUrls, timestamps);
 
         result += String.format(
                 "Author[id=%d, name='%s']%n",
