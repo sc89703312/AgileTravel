@@ -21,6 +21,7 @@ public class ActivityCURDServiceTests {
 
     @Test
     public void testActivityCURDService() {
+        System.out.println(activityCURDService.queryDetailedActivity(1, 4));
         ActivityInfoParam param =
                 new ActivityInfoParam("activity by test", "something", "nju",
                         DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(),

@@ -6,6 +6,7 @@ import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.model.ActivityInfoParam;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.vo.ActivityBaseVO;
+import nju.agile.travel.vo.ActivityDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,27 @@ public class ActivityCURDService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Transactional
+    public ActivityDetailVO queryDetailedActivity(int userID, int activityID) {
+        return userRepo
+                .findById(userID)
+                .map(userEntity -> activityRepo
+                        .findById(activityID)
+                        .map(activityEntity -> {
+                            if (userEntity.getApplyingActivityList().contains(activityEntity))
+                                return new ActivityDetailVO(activityEntity, Constants.MEMBER_APPLYING);
+                            else if (userEntity.getJoinedActivityList().contains(activityEntity))
+                                return new ActivityDetailVO(activityEntity, Constants.MEMBER_APPROVED);
+                            else if (userEntity.getCreatedActivityList().contains(activityEntity))
+                                return new ActivityDetailVO(activityEntity, Constants.MEMBER_CREATOR);
+                            else
+                                return new ActivityDetailVO(activityEntity, Constants.MEMBER_NONE);
+                        })
+                        .orElseThrow(() -> new RuntimeException("活动ID不存在"))
+                )
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+    }
 
     @Transactional
     public List<ActivityBaseVO> queryActivityPage(int userID, int pageIndex) {
