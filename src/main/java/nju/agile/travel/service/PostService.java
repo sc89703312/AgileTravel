@@ -7,6 +7,7 @@ import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.entity.PostEntity;
 import nju.agile.travel.entity.UserEntity;
 import nju.agile.travel.model.PostInfoParam;
+import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
 import nju.agile.travel.vo.PostBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,17 @@ public class PostService {
     @Transactional
     public int post(PostInfoParam param){
         UserEntity author = userRepo
-                .findById(param.getAuthorId())
-                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+                .findByIdAndCheck(param.getAuthorId(), Constants.ACCOUNT_ON)
+                .orElseThrow(() -> new RuntimeException("用户ID不存在或未过审"));
         ActivityEntity belongedActivity = activityRepo
-                .findById(param.getActivityId())
-                .orElseThrow(() -> new RuntimeException("活动ID不存在"));
-        if(!belongedActivity.getParticipants().contains(author)){
-            throw new RuntimeException("用户不在活动中，不能评论");
-        }
+                .findByIdAndCheck(param.getActivityId(), Constants.ACTIVITY_ON)
+                .orElseThrow(() -> new RuntimeException("活动ID不存在或未过审"));
+
+        /*To do:
+        *
+        * 待activity有过审的participants和未过审的participants后
+        *
+        * */
 
         return postRepo.save(buildPostEntity(param, author, belongedActivity)).getId();
     }
