@@ -35,7 +35,7 @@ public class ActivityBaseVO {
 
     UserBaseVO organizer;
 
-    public ActivityBaseVO(final ActivityEntity activityEntity, int memberStatus) {
+    ActivityBaseVO(ActivityEntity activityEntity) {
         this.id = activityEntity.getId();
         this.title = activityEntity.getName();
         this.description = activityEntity.getDescription();
@@ -43,11 +43,15 @@ public class ActivityBaseVO {
         this.startDateTime = activityEntity.getStartTime();
         this.endDateTime = activityEntity.getEndTime();
         this.cover = activityEntity.getImageUrls() == null ?
-            "" : Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
+                "" : Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
         this.comments = activityEntity.getPostNum();
-        this.isMember = memberStatus;
         this.isPublic = activityEntity.getAccess() == Constants.ACTIVITY_PUBLIC;
         this.organizer = new UserBaseVO(activityEntity.getCreator());
+    }
+
+    public ActivityBaseVO(ActivityEntity activityEntity, int memberStatus) {
+        this(activityEntity);
+        this.isMember = memberStatus;
     }
 
     @Override

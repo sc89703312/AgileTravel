@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import nju.agile.travel.util.Constants;
 import org.hibernate.annotations.ColumnTransformer;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.*;
@@ -44,21 +43,21 @@ public class UserEntity {
     @Column(name = "created_at")
     Date createdAt;
 
-    @OneToMany(mappedBy = "organizer")
+    @OneToMany(mappedBy = "creator")
     Set<ActivityEntity> createdActivityList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
             joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
-    @WhereJoinTable(clause = "status = ${activity.member.approved}")
+    @WhereJoinTable(clause = "status = 1")
     Set<ActivityEntity> joinedActivityList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
             joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
-    @WhereJoinTable(clause = "status = ${activity.member.applying}")
+    @WhereJoinTable(clause = "status = 0")
     Set<ActivityEntity> applyingActivityList;
 
     @Override

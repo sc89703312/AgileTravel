@@ -4,13 +4,11 @@ import nju.agile.travel.dao.ActivityRepo;
 import nju.agile.travel.dao.PostRepo;
 import nju.agile.travel.dao.ShareRepo;
 import nju.agile.travel.dao.UserRepo;
-import nju.agile.travel.model.ActivityInfoParam;
 import nju.agile.travel.model.RegisterParam;
 import nju.agile.travel.service.ActivityCURDService;
 import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
 import nju.agile.travel.util.Base64Util;
-import nju.agile.travel.util.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -112,22 +108,5 @@ public class TravelApplicationTests {
        authService.check(9,"OSAyMDE5LTAxLTExIDE1OjA3OjM3");
     }
 
-//    @Test
-//    public void testActivityCURDService() {
-//        ActivityInfoParam param =
-//                new ActivityInfoParam("activity by test", "something", "nju",
-//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "url",
-//                        true, 1);
-//        ActivityInfoParam newParam =
-//                new ActivityInfoParam("activity by test", "another thing", "nju",
-//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "another url",
-//                        false, 1);
-//        activityCURDService.createActivity(param);
-//        int activityID = activityCURDService.createActivity(param);
-//        activityCURDService.editActivity(activityID, newParam);
-//        System.out.println(activityCURDService.queryActivityPage(0));
-//        System.out.println(activityCURDService.queryCreatedActivity(1));
-//        System.out.println(activityCURDService.queryJoinedActivity(1));
-//    }
 }
 

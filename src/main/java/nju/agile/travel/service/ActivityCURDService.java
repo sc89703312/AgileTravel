@@ -27,6 +27,7 @@ public class ActivityCURDService {
     @Autowired
     UserRepo userRepo;
 
+    @Transactional
     public List<ActivityBaseVO> queryActivityPage(int userID, int pageIndex) {
         return userRepo
                 .findById(userID)
