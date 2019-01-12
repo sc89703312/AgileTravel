@@ -3,6 +3,7 @@ package nju.agile.travel.model;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ShirokoSama on 2019/1/10.
@@ -20,7 +21,7 @@ public class ActivityInfoParam {
 
     Date endTime;
 
-    String bannerUrl;
+    List<String> imageUrls;
 
     boolean isPublic;
 
@@ -32,7 +33,7 @@ public class ActivityInfoParam {
             String location,
             Date startTime,
             Date endTime,
-            String bannerUrl,
+            List<String> imageUrls,
             boolean isPublic,
             int creatorID) {
         this.name = name;
@@ -40,9 +41,13 @@ public class ActivityInfoParam {
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.bannerUrl = bannerUrl;
+        this.imageUrls = imageUrls;
         this.isPublic = isPublic;
         this.creatorID = creatorID;
+    }
+
+    public String getImageUrls() {
+        return String.join(" ", imageUrls);
     }
 
 }

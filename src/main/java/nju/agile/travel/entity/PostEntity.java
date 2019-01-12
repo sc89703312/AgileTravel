@@ -38,11 +38,11 @@ public class PostEntity {
                 id, content, imageUrls, timestamps);
 
         result += String.format(
-                "Author[id=%d, name='%s']%n",
+                "Author[id=%d, title='%s']%n",
                 author.getId(), author.getName());
 
         result += String.format(
-                "Activity[id=%d, name='%s']%n",
+                "Activity[id=%d, title='%s']%n",
                 belongedActivity.getId(), belongedActivity.getName());
 
         return result;

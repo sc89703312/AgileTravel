@@ -112,22 +112,22 @@ public class TravelApplicationTests {
        authService.check(9,"OSAyMDE5LTAxLTExIDE1OjA3OjM3");
     }
 
-    @Test
-    public void testActivityCURDService() {
-        ActivityInfoParam param =
-                new ActivityInfoParam("activity by test", "something", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "url",
-                        true, 1);
-        ActivityInfoParam newParam =
-                new ActivityInfoParam("activity by test", "another thing", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "another url",
-                        false, 1);
-        activityCURDService.createActivity(param);
-        int activityID = activityCURDService.createActivity(param);
-        activityCURDService.editActivity(activityID, newParam);
-        System.out.println(activityCURDService.queryActivityPage(0));
-        System.out.println(activityCURDService.queryCreatedActivity(1));
-        System.out.println(activityCURDService.queryJoinedActivity(1));
-    }
+//    @Test
+//    public void testActivityCURDService() {
+//        ActivityInfoParam param =
+//                new ActivityInfoParam("activity by test", "something", "nju",
+//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "url",
+//                        true, 1);
+//        ActivityInfoParam newParam =
+//                new ActivityInfoParam("activity by test", "another thing", "nju",
+//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(), "another url",
+//                        false, 1);
+//        activityCURDService.createActivity(param);
+//        int activityID = activityCURDService.createActivity(param);
+//        activityCURDService.editActivity(activityID, newParam);
+//        System.out.println(activityCURDService.queryActivityPage(0));
+//        System.out.println(activityCURDService.queryCreatedActivity(1));
+//        System.out.println(activityCURDService.queryJoinedActivity(1));
+//    }
 }
 

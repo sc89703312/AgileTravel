@@ -27,11 +27,26 @@ public class ActivityCURDService {
     @Autowired
     UserRepo userRepo;
 
-    public List<ActivityBaseVO> queryActivityPage(int pageIndex) {
-        return activityRepo
-                .findByCheckAndAccess(Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC, PageRequest.of(pageIndex, Constants.PAGE_SIZE))
-                .map(ActivityBaseVO::new)
-                .getContent();
+    public List<ActivityBaseVO> queryActivityPage(int userID, int pageIndex) {
+        return userRepo
+                .findById(userID)
+                .map(userEntity -> activityRepo
+                        .findByCheckAndAccess(Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC, PageRequest.of(pageIndex, Constants.PAGE_SIZE))
+                        .getContent()
+                        .stream()
+                        .map(activityEntity -> {
+                            if (userEntity.getApplyingActivityList().contains(activityEntity))
+                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPLYING);
+                            else if (userEntity.getJoinedActivityList().contains(activityEntity))
+                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPROVED);
+                            else if (userEntity.getCreatedActivityList().contains(activityEntity))
+                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_CREATOR);
+                            else
+                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_NONE);
+                        })
+                        .collect(Collectors.toList())
+                )
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
     }
 
     @Transactional
@@ -41,7 +56,7 @@ public class ActivityCURDService {
                 .map(userEntity -> userEntity
                         .getCreatedActivityList()
                         .stream()
-                        .map(ActivityBaseVO::new)
+                        .map(activityEntity -> new ActivityBaseVO(activityEntity, Constants.MEMBER_CREATOR))
                         .collect(Collectors.toList()))
                 .orElseGet(ArrayList::new);
     }
@@ -53,7 +68,7 @@ public class ActivityCURDService {
                 .map(userEntity -> userEntity
                     .getJoinedActivityList()
                     .stream()
-                    .map(ActivityBaseVO::new)
+                    .map(activityEntity -> new ActivityBaseVO(activityEntity, Constants.MEMBER_APPROVED))
                     .collect(Collectors.toList()))
                 .orElseGet(ArrayList::new);
     }
@@ -65,6 +80,7 @@ public class ActivityCURDService {
                     ActivityEntity entity = new ActivityEntity();
                     entity.setCreator(userEntity);
                     entity.setCheck(Constants.ACTIVITY_ON);
+                    entity.setPostNum(0);
                     activityRepo.save(buildActivityEntity(entity, param));
                     return entity.getId();
                 })
@@ -85,7 +101,7 @@ public class ActivityCURDService {
         entity.setLocation(param.getLocation());
         entity.setStartTime(param.getStartTime());
         entity.setEndTime(param.getEndTime());
-        entity.setBannerUrl(param.getBannerUrl());
+        entity.setImageUrls(param.getImageUrls());
         entity.setAccess(param.isPublic() ? Constants.ACTIVITY_PUBLIC : Constants.ACTIVITY_PRIVATE);
         return entity;
     }

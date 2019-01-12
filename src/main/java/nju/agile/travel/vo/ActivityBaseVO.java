@@ -2,7 +2,9 @@ package nju.agile.travel.vo;
 
 import lombok.Data;
 import nju.agile.travel.entity.ActivityEntity;
+import nju.agile.travel.util.Constants;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -13,36 +15,46 @@ public class ActivityBaseVO {
 
     int id;
 
-    String name;
+    String title;
 
     String description;
 
-    String location;
+    String address;
 
-    Date startTime;
+    Date startDateTime;
 
-    Date endTime;
+    Date endDateTime;
 
-    String bannerUrl;
+    String cover;
 
-    UserBaseVO creator;
+    int comments;
 
-    public ActivityBaseVO(final ActivityEntity activityEntity) {
+    int isMember; // 0-applying, 1-participant, 2-organizer, 3-not in this activity
+
+    boolean isPublic;
+
+    UserBaseVO organizer;
+
+    public ActivityBaseVO(final ActivityEntity activityEntity, int memberStatus) {
         this.id = activityEntity.getId();
-        this.name = activityEntity.getName();
+        this.title = activityEntity.getName();
         this.description = activityEntity.getDescription();
-        this.location = activityEntity.getLocation();
-        this.startTime = activityEntity.getStartTime();
-        this.endTime = activityEntity.getEndTime();
-        this.bannerUrl = activityEntity.getBannerUrl();
-        this.creator = new UserBaseVO(activityEntity.getCreator());
+        this.address = activityEntity.getLocation();
+        this.startDateTime = activityEntity.getStartTime();
+        this.endDateTime = activityEntity.getEndTime();
+        this.cover = activityEntity.getImageUrls() == null ?
+            "" : Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
+        this.comments = activityEntity.getPostNum();
+        this.isMember = memberStatus;
+        this.isPublic = activityEntity.getAccess() == Constants.ACTIVITY_PUBLIC;
+        this.organizer = new UserBaseVO(activityEntity.getCreator());
     }
 
     @Override
     public String toString() {
         return String.format(
-                "%nActivityBaseVO[id=%d, name=%s, description=%s, location=%s, startTime=%s, endTime=%s, bannerUrl=%s, creatorID=%d]",
-                id, name, description, location, startTime.toString(), endTime.toString(), bannerUrl, creator.getId());
+                "%nActivityBaseVO[id=%d, title=%s, description=%s, address=%s, startDateTime=%s, endDateTime=%s, cover=%s, organizerID=%d]",
+                id, title, description, address, startDateTime.toString(), endDateTime.toString(), cover, organizer.getId());
     }
 
 }

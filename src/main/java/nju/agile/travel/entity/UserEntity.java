@@ -2,13 +2,13 @@ package nju.agile.travel.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import nju.agile.travel.util.Constants;
 import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,27 +44,35 @@ public class UserEntity {
     @Column(name = "created_at")
     Date createdAt;
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "organizer")
     Set<ActivityEntity> createdActivityList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
             joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
+    @WhereJoinTable(clause = "status = ${activity.member.approved}")
     Set<ActivityEntity> joinedActivityList;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "r_user_activity",
+            joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
+    @WhereJoinTable(clause = "status = ${activity.member.applying}")
+    Set<ActivityEntity> applyingActivityList;
 
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
 
         buf.append(String.format(
-                "User[id=%d, name='%s', mail='%s', password='%s', avatarUrl='%s', check=%d, wechat='%s']%n",
+                "User[id=%d, title='%s', email='%s', password='%s', avaUrl='%s', check=%d, wechat='%s']%n",
                 id, name, mail, password, avatarUrl, check, weChat));
 
         if (createdActivityList != null) {
             for(ActivityEntity activity : createdActivityList) {
                 buf.append(String.format(
-                        "CreatedActivity[id=%d, name='%s']%n",
+                        "CreatedActivity[id=%d, title='%s']%n",
                         activity.getId(), activity.getName()));
             }
         }
@@ -72,7 +80,15 @@ public class UserEntity {
         if (joinedActivityList != null) {
             for(ActivityEntity activity : joinedActivityList) {
                 buf.append(String.format(
-                        "JoinedActivity[id=%d, name='%s']%n",
+                        "JoinedActivity[id=%d, title='%s']%n",
+                        activity.getId(), activity.getName()));
+            }
+        }
+
+        if (applyingActivityList != null) {
+            for(ActivityEntity activity : applyingActivityList) {
+                buf.append(String.format(
+                        "ApplyingActivity[id=%d, title='%s']%n",
                         activity.getId(), activity.getName()));
             }
         }

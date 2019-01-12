@@ -11,27 +11,27 @@ public class UserBaseVO {
 
     int id;
 
-    String name;
+    String username;
 
-    String mail;
+    String email;
 
-    String avatarUrl;
+    String avaUrl;
 
     String weChat;
 
     public UserBaseVO(UserEntity userEntity) {
         this.id = userEntity.getId();
-        this.name = userEntity.getName();
-        this.mail = userEntity.getMail();
-        this.avatarUrl = userEntity.getAvatarUrl();
+        this.username = userEntity.getName();
+        this.email = userEntity.getMail();
+        this.avaUrl = userEntity.getAvatarUrl();
         this.weChat = userEntity.getWeChat();
     }
 
     @Override
     public String toString() {
         return String.format(
-                "UserBaseVO[id=%d, name=%s, mail=%s, avatarUrl=%s, weChat=%s]",
-                id, name, mail, avatarUrl, weChat);
+                "UserBaseVO[id=%d, title=%s, email=%s, avaUrl=%s, weChat=%s]",
+                id, username, email, avaUrl, weChat);
     }
 
 }

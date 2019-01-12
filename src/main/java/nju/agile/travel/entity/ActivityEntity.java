@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,8 +31,8 @@ public class ActivityEntity {
     @Column(name = "end_time")
     Date endTime;
 
-    @Column(name = "banner_url")
-    String bannerUrl;
+    @Column(name = "image_urls")
+    String imageUrls;
 
     @Column(name = "[check]")
     int check;
@@ -44,12 +43,18 @@ public class ActivityEntity {
     @Column(name = "invited_at")
     Date invitedAt;
 
+    @Column(name = "post_num")
+    int postNum;
+
     @ManyToOne
     @JoinColumn(name = "t_user_id")
     UserEntity creator;
 
     @ManyToMany(mappedBy = "joinedActivityList")
     Set<UserEntity> participants;
+
+    @ManyToMany(mappedBy = "applyingActivityList")
+    Set<UserEntity> applicants;
 
     @OneToMany(mappedBy = "belongedActivity")
     Set<PostEntity> posts;
@@ -59,20 +64,28 @@ public class ActivityEntity {
         StringBuilder buf = new StringBuilder();
 
         buf.append(String.format(
-                "Activity[id=%d, name='%s', description='%s', location='%s', start_time='%s', end_time='%s', banner_url='%s', check=%d]%n",
-                id, name, description, location, startTime.toString(), endTime.toString(), bannerUrl, check));
+                "Activity[id=%d, title='%s', description='%s', address='%s', start_time='%s', end_time='%s', image_urls='%s', check=%d]%n",
+                id, name, description, location, startTime.toString(), endTime.toString(), imageUrls, check));
 
         if (creator != null) {
             buf.append(String.format(
-                    "Creator[id=%d, name='%s']%n",
+                    "Creator[id=%d, title='%s']%n",
                     creator.getId(), creator.getName()));
         }
 
         if (participants != null) {
             for(UserEntity participant : participants) {
                 buf.append(String.format(
-                        "Participant[id=%d, name='%s']%n",
+                        "Participant[id=%d, title='%s']%n",
                         participant.getId(), participant.getName()));
+            }
+        }
+
+        if (applicants != null) {
+            for (UserEntity applicant: applicants) {
+                buf.append(String.format(
+                        "Applicant[id=%d, title='%s']%n",
+                        applicant.getId(), applicant.getName()));
             }
         }
 
