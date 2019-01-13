@@ -1,6 +1,7 @@
 package nju.agile.travel;
 
 import nju.agile.travel.dao.UserRepo;
+import nju.agile.travel.model.LoginParam;
 import nju.agile.travel.model.RegisterParam;
 import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
@@ -30,22 +31,26 @@ public class AuthServiceTests {
 
     @Test
     public void testLogin(){
-        System.out.println(authService.login("sc89703312@qq.com", "123456"));
+        LoginParam param = new LoginParam("sc89703312@qq.com", "123456");
+        System.out.println(authService.login(param));
     }
 
     @Test
     public void testLoginWrongPwd(){
-        System.out.println(authService.login("sc89703312@qq.com", "1"));
+        LoginParam param = new LoginParam("sc89703312@qq.com", "1");
+        System.out.println(authService.login(param));
     }
 
     @Test
     public void testLoginWrongMail(){
-        System.out.println(authService.login("?", "1"));
+        LoginParam param = new LoginParam("?", "1");
+        System.out.println(authService.login(param));
     }
 
     @Test
     public void testLoginUnchecked(){
-        System.out.println(authService.login("2271642660@qq.com", "123456"));
+        LoginParam param = new LoginParam("2271642660@qq.com", "123456");
+        System.out.println(authService.login(param));
     }
 
 }

@@ -8,17 +8,19 @@ import lombok.Data;
 @Data
 public class RegisterParam {
 
-    String mail;
+    String email;
 
-    String name;
+    String username;
 
     String password;
 
     String avatarUrl;
 
+    public RegisterParam(){}
+
     public RegisterParam(String mail, String name, String password, String avatarUrl){
-        this.mail = mail;
-        this.name = name;
+        this.email = mail;
+        this.username = name;
         this.password = password;
         this.avatarUrl = avatarUrl;
     }
