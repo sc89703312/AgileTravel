@@ -1,6 +1,7 @@
 package nju.agile.travel;
 
 import nju.agile.travel.dao.ShareRepo;
+import nju.agile.travel.model.ShareInfoParam;
 import nju.agile.travel.service.ShareService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ public class ShareServiceTests {
     @Autowired
     ShareService shareService;
 
-    @Test
+//    @Test
     public void testShareRepo(){
         System.out.println(shareRepo.findAllByOrderByStarNumAsc());
         System.out.println(shareRepo.findAllByOrderByStarNumDesc());
@@ -30,11 +31,46 @@ public class ShareServiceTests {
         System.out.println(shareRepo.findAllByOrderByTimestampsDesc());
     }
 
-    @Test
+//    @Test
     public void testQueryAll(){
         System.out.println(shareService.queryShareList(1));
         System.out.println(shareService.queryShareList(2));
         System.out.println(shareService.queryShareList(100));
+    }
+
+    @Test
+    public void testShare(){
+        ShareInfoParam param = new ShareInfoParam(1, "hehe", 1);
+        System.out.println(shareService.share(param));
+    }
+
+    @Test
+    public void testShareUserInvalid(){
+        ShareInfoParam param = new ShareInfoParam(100, "hehe", 1);
+        System.out.println(shareService.share(param));
+    }
+
+    @Test
+    public void testShareActivityInvalid(){
+        ShareInfoParam param = new ShareInfoParam(1, "hehe", 100);
+        System.out.println(shareService.share(param));
+    }
+
+    @Test
+    public void testShareUserNotJoined(){
+        ShareInfoParam param = new ShareInfoParam(3, "hehe", 1);
+        System.out.println(shareService.share(param));
+    }
+
+    @Test
+    public void testShareStar(){
+        shareService.star(1,2); //works
+        shareService.star(1,2); //not works
+    }
+
+    @Test
+    public void testShareStarInvalidShare(){
+        shareService.star(2, 100);
     }
 
 }

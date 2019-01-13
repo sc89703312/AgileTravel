@@ -50,11 +50,9 @@ public class PostService {
                 .findByIdAndCheck(param.getActivityId(), Constants.ACTIVITY_ON)
                 .orElseThrow(() -> new RuntimeException("活动ID不存在或未过审"));
 
-        /*To do:
-        *
-        * 待activity有过审的participants和未过审的participants后
-        *
-        * */
+        if(!belongedActivity.getParticipants().contains(author)){
+            throw new RuntimeException("用户未参加该活动，或尚在审核中");
+        }
 
         return postRepo.save(buildPostEntity(param, author, belongedActivity)).getId();
     }
