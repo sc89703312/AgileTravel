@@ -12,6 +12,8 @@ public class ShareInfoParam {
     String contents;
     int activityId;
 
+    public ShareInfoParam(){}
+
     public ShareInfoParam(int userId, String contents, int activityId){
         this.userId = userId;
         this.contents = contents;

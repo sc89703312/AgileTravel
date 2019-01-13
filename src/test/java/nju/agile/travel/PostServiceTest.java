@@ -1,13 +1,16 @@
 package nju.agile.travel;
 
+import nju.agile.travel.dao.ActivityRepo;
 import nju.agile.travel.dao.PostRepo;
 import nju.agile.travel.model.PostInfoParam;
 import nju.agile.travel.service.PostService;
+import nju.agile.travel.util.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
@@ -23,6 +26,9 @@ public class PostServiceTest {
 
     @Autowired
     PostRepo postRepo;
+
+    @Autowired
+    ActivityRepo activityRepo;
 
 
     @Test

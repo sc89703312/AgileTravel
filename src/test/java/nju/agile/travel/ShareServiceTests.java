@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by echo on 2019/1/12.
  */
@@ -73,4 +77,12 @@ public class ShareServiceTests {
         shareService.star(2, 100);
     }
 
+    @Test
+    public void testListStr(){
+        String test = "";
+        List<String> list = new ArrayList<>(Arrays.asList(test.split(" ")));
+        System.out.println(list);
+        list.add("123");
+        System.out.println(list);
+    }
 }

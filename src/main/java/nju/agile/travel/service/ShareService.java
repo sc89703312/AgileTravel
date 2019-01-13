@@ -58,7 +58,10 @@ public class ShareService {
     }
 
     public void star(Integer userId, Integer shareId){
-         shareRepo
+
+        userRepo.findByIdAndCheck(userId, Constants.ACCOUNT_ON).orElseThrow(() -> new RuntimeException("用户ID不存在或未过审"));
+
+        shareRepo
                 .findById(shareId)
                 .map(shareEntity -> {
                     String starUserIds = shareEntity.getStarUserIds();
