@@ -50,7 +50,7 @@ public class ShareService {
                 .findByIdAndCheckAndAccess(param.getActivityId(), Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC)
                 .orElseThrow(() -> new RuntimeException("活动ID不存在或未过审或为私密活动"));
 
-        if(!belongedActivity.getParticipants().contains(author)){
+        if(!belongedActivity.getCreatorAndParticipants().contains(author)){
             throw new RuntimeException("用户未参加该活动，或尚在审核中");
         }
 

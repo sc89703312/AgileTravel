@@ -50,7 +50,7 @@ public class PostService {
                 .findByIdAndCheck(param.getActivityId(), Constants.ACTIVITY_ON)
                 .orElseThrow(() -> new RuntimeException("活动ID不存在或未过审"));
 
-        if(!belongedActivity.getParticipants().contains(author)){
+        if(!belongedActivity.getCreatorAndParticipants().contains(author)){
             throw new RuntimeException("用户未参加该活动，或尚在审核中");
         }
 

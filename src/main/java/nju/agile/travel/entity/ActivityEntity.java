@@ -6,6 +6,7 @@ import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -64,6 +65,12 @@ public class ActivityEntity {
 
     @OneToMany(mappedBy = "activity")
     Set<RUserActivityEntity> userActivityRelations;
+
+    public Set<UserEntity> getCreatorAndParticipants() {
+        Set<UserEntity> users = new HashSet<>(participants);
+        users.add(creator);
+        return users;
+    }
 
     @Override
     public String toString() {

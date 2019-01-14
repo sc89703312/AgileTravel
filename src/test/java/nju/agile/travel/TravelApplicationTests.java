@@ -4,11 +4,13 @@ import nju.agile.travel.dao.ActivityRepo;
 import nju.agile.travel.dao.PostRepo;
 import nju.agile.travel.dao.ShareRepo;
 import nju.agile.travel.dao.UserRepo;
+import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.model.RegisterParam;
 import nju.agile.travel.service.ActivityCURDService;
 import nju.agile.travel.service.AuthService;
 import nju.agile.travel.service.MailService;
 import nju.agile.travel.util.Base64Util;
+import nju.agile.travel.util.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +109,13 @@ public class TravelApplicationTests {
     public void testAccountCheck(){
        authService.check(9,"OSAyMDE5LTAxLTExIDE1OjA3OjM3");
     }
+
+//    @Test
+//    @Transactional
+//    public void testActivityEntity() {
+//        ActivityEntity entity = activityRepo.findById(1).get();
+//        System.out.println(entity.getCreatorAndParticipants());
+//    }
 
 }
 
