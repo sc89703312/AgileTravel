@@ -10,6 +10,7 @@ import nju.agile.travel.entity.UserEntity;
 import nju.agile.travel.util.Base64Util;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
+import nju.agile.travel.vo.ActivityBaseVO;
 import nju.agile.travel.vo.UserBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;

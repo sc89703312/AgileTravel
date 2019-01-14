@@ -2,6 +2,7 @@ package nju.agile.travel.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -54,9 +55,11 @@ public class ActivityEntity {
     Set<PostEntity> posts;
 
     @ManyToMany(mappedBy = "joinedActivityList")
+    @WhereJoinTable(clause = "status = 1")
     Set<UserEntity> participants;
 
     @ManyToMany(mappedBy = "applyingActivityList")
+    @WhereJoinTable(clause = "status = 0")
     Set<UserEntity> applicants;
 
     @OneToMany(mappedBy = "activity")
