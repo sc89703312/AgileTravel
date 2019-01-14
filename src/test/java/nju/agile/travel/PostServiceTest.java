@@ -40,7 +40,7 @@ public class PostServiceTest {
 
     @Test
     public void testCreatePost(){
-        PostInfoParam param = new PostInfoParam(2, 1, "post content", Arrays.asList("url1", "url2"));
+        PostInfoParam param = new PostInfoParam(2, 1, "中文测试", Arrays.asList("url1", "url2"));
         System.out.println(postService.post(param));
     }
 

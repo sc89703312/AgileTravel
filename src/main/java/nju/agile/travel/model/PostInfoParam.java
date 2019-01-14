@@ -16,6 +16,8 @@ public class PostInfoParam {
     String content;
     List<String> imageUrls;
 
+    public PostInfoParam(){}
+
     public PostInfoParam(int authorId, int activityId, String content, List<String> imageUrls){
         this.authorId = authorId;
         this.activityId = activityId;
