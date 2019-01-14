@@ -64,7 +64,7 @@ public class ActivityMemberService {
             ActivityEntity activityEntity = pair.getSecond();
             if (DateUtil.dateToString(activityEntity.getInvitedAt()).equals(matcher.group(2))) {
                 RUserActivityEntity relationEntity =
-                        new RUserActivityEntity(userEntity, activityEntity, Constants.MEMBER_APPROVED);
+                        RUserActivityEntity.of(userEntity, activityEntity, Constants.MEMBER_APPROVED);
                 rUserActivityRepo.save(relationEntity);
                 return activityID;
             }

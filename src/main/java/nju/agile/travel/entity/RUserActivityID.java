@@ -14,11 +14,18 @@ public class RUserActivityID implements Serializable {
 
     int activityID;
 
-    public RUserActivityID() {}
+//    public RUserActivityID() {}
+//
+//    public RUserActivityID(int userID, int activityID) {
+//        this.userID = userID;
+//        this.activityID = activityID;
+//    }
 
-    RUserActivityID(int userID, int activityID) {
-        this.userID = userID;
-        this.activityID = activityID;
+    public static RUserActivityID of(int userID, int activityID) {
+        RUserActivityID id = new RUserActivityID();
+        id.setUserID(userID);
+        id.setActivityID(activityID);
+        return id;
     }
 
     @Override
