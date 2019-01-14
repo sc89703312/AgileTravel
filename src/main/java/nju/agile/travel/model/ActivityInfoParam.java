@@ -25,8 +25,6 @@ public class ActivityInfoParam {
 
     boolean isPublic;
 
-    int creatorID;
-
     public ActivityInfoParam(
             String name,
             String description,
@@ -34,8 +32,7 @@ public class ActivityInfoParam {
             Date startTime,
             Date endTime,
             List<String> imageUrls,
-            boolean isPublic,
-            int creatorID) {
+            boolean isPublic) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -43,7 +40,6 @@ public class ActivityInfoParam {
         this.endTime = endTime;
         this.imageUrls = imageUrls;
         this.isPublic = isPublic;
-        this.creatorID = creatorID;
     }
 
     public String getImageUrls() {

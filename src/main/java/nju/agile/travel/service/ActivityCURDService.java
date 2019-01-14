@@ -35,6 +35,9 @@ public class ActivityCURDService {
                 .map(userEntity -> activityRepo
                         .findById(activityID)
                         .map(activityEntity -> {
+                            if (activityEntity.getAccess() != Constants.ACTIVITY_PUBLIC &&
+                                    !activityEntity.getCreatorAndParticipants().contains(userEntity))
+                                throw new RuntimeException("用户不是私密活动的成员");
                             if (userEntity.getApplyingActivityList().contains(activityEntity))
                                 return new ActivityDetailVO(activityEntity, Constants.MEMBER_APPLYING);
                             else if (userEntity.getJoinedActivityList().contains(activityEntity))
@@ -97,8 +100,8 @@ public class ActivityCURDService {
     }
 
     @Transactional
-    public int createActivity(ActivityInfoParam param) {
-        return userRepo.findById(param.getCreatorID())
+    public int createActivity(int userID, ActivityInfoParam param) {
+        return userRepo.findByIdAndCheck(userID, Constants.ACCOUNT_ON)
                 .map(userEntity -> {
                     ActivityEntity entity = new ActivityEntity();
                     entity.setCreator(userEntity);
@@ -107,15 +110,26 @@ public class ActivityCURDService {
                     activityRepo.save(buildActivityEntity(entity, param));
                     return entity.getId();
                 })
-                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+                .orElseThrow(() -> new RuntimeException("用户ID不存在或未审核"));
     }
 
     @Transactional
-    public void editActivity(int activityID, ActivityInfoParam param) {
-        activityRepo
-                .findById(activityID)
-                .map(activityEntity -> activityRepo.save(buildActivityEntity(activityEntity, param)))
-                .orElseThrow(() -> new RuntimeException("活动ID不存在"));
+    public int editActivity(int userID, int activityID, ActivityInfoParam param) {
+        return userRepo
+                .findByIdAndCheck(userID, Constants.ACCOUNT_ON)
+                .map(userEntity -> activityRepo
+                        .findById(activityID)
+                        .map(activityEntity -> {
+                            if (activityEntity.getCreator().getId() == userID) {
+                                activityRepo.save(buildActivityEntity(activityEntity, param));
+                                return activityID;
+                            }
+                            else
+                                throw new RuntimeException("用户不是活动创建者无权修改活动");
+                        })
+                        .orElseThrow(() -> new RuntimeException("活动ID不存在"))
+                )
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
     }
 
     private ActivityEntity buildActivityEntity(ActivityEntity entity, ActivityInfoParam param) {
