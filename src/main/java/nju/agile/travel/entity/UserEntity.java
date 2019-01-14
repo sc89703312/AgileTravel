@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Entity(name = "t_user")
 @Data
-@EqualsAndHashCode(exclude = {"createdActivityList", "joinedActivityList"})
+@EqualsAndHashCode(exclude = {"createdActivityList", "joinedActivityList", "applyingActivityList", "userActivityRelations"})
 public class UserEntity {
 
     @Id
@@ -48,17 +48,28 @@ public class UserEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
-            joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(
+                    name = "t_user_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "t_activity_id",
+                    referencedColumnName = "id"))
     @WhereJoinTable(clause = "status = 1")
     Set<ActivityEntity> joinedActivityList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "r_user_activity",
-            joinColumns = @JoinColumn(name = "t_user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "t_activity_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(
+                    name = "t_user_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "t_activity_id",
+                    referencedColumnName = "id"))
     @WhereJoinTable(clause = "status = 0")
     Set<ActivityEntity> applyingActivityList;
+
+    @OneToMany(mappedBy = "user")
+    Set<RUserActivityEntity> userActivityRelations;
 
     @Override
     public String toString() {

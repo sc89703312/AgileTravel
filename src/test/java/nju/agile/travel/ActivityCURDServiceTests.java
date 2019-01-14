@@ -21,18 +21,18 @@ public class ActivityCURDServiceTests {
 
     @Test
     public void testActivityCURDService() {
-        System.out.println(activityCURDService.queryDetailedActivity(1, 4));
-        ActivityInfoParam param =
-                new ActivityInfoParam("activity by test", "something", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(),
-                        new ArrayList<>(Collections.singletonList("url")), true, 1);
-        ActivityInfoParam newParam =
-                new ActivityInfoParam("activity by test", "another thing", "nju",
-                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(),
-                        new ArrayList<>(Collections.singleton("another-url")), false, 1);
-        activityCURDService.createActivity(param);
-        int activityID = activityCURDService.createActivity(param);
-        activityCURDService.editActivity(activityID, newParam);
+        System.out.println(activityCURDService.queryDetailedActivity(1, 1));
+//        ActivityInfoParam param =
+//                new ActivityInfoParam("activity by test", "something", "nju",
+//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(),
+//                        new ArrayList<>(Collections.singletonList("url")), true, 1);
+//        ActivityInfoParam newParam =
+//                new ActivityInfoParam("activity by test", "another thing", "nju",
+//                        DateUtil.getCurrentRoundDate(), DateUtil.getCurrentRoundDate(),
+//                        new ArrayList<>(Collections.singleton("another-url")), false, 1);
+//        activityCURDService.createActivity(param);
+//        int activityID = activityCURDService.createActivity(param);
+//        activityCURDService.editActivity(activityID, newParam);
         System.out.println(activityCURDService.queryActivityPage(1, 0));
         System.out.println(activityCURDService.queryCreatedActivity(1));
         System.out.println(activityCURDService.queryJoinedActivity(1));

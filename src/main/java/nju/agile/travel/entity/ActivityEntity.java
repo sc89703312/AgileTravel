@@ -12,7 +12,7 @@ import java.util.Set;
  */
 @Entity(name = "t_activity")
 @Data
-@EqualsAndHashCode(exclude = {"participants", "posts"})
+@EqualsAndHashCode(exclude = {"posts", "participants", "applicants", "userActivityRelations"})
 public class ActivityEntity {
 
     @Id
@@ -50,14 +50,17 @@ public class ActivityEntity {
     @JoinColumn(name = "t_user_id")
     UserEntity creator;
 
+    @OneToMany(mappedBy = "belongedActivity")
+    Set<PostEntity> posts;
+
     @ManyToMany(mappedBy = "joinedActivityList")
     Set<UserEntity> participants;
 
     @ManyToMany(mappedBy = "applyingActivityList")
     Set<UserEntity> applicants;
 
-    @OneToMany(mappedBy = "belongedActivity")
-    Set<PostEntity> posts;
+    @OneToMany(mappedBy = "activity")
+    Set<RUserActivityEntity> userActivityRelations;
 
     @Override
     public String toString() {

@@ -3,6 +3,7 @@ package nju.agile.travel.vo;
 import lombok.Data;
 import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.util.Constants;
+import nju.agile.travel.util.DateUtil;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -59,7 +60,7 @@ public class ActivityBaseVO {
         return String.format(
                 "%nActivityBaseVO[id=%d, title=%s, description=%s, address=%s, startDateTime=%s, endDateTime=%s, " +
                         "cover=%s, organizerID=%d, isMember=%d, isPublic=%b]",
-                id, title, description, address, startDateTime.toString(), endDateTime.toString(),
+                id, title, description, address, DateUtil.dateToString(startDateTime), DateUtil.dateToString(endDateTime),
                 cover, organizer.getId(), isMember, isPublic);
     }
 

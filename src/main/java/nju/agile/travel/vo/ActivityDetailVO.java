@@ -3,6 +3,7 @@ package nju.agile.travel.vo;
 import lombok.Data;
 import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.util.Constants;
+import nju.agile.travel.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,10 +67,10 @@ public class ActivityDetailVO {
         buf.append(String.format(
                 "%nActivityDetailedVO[id=%d, title=%s, description=%s, address=%s, startDateTime=%s, endDateTime=%s, " +
                         "images=%s, organizerID=%d, isMember=%d, isPublic=%b]",
-                id, title, description, address, startDateTime.toString(), endDateTime.toString(),
+                id, title, description, address, DateUtil.dateToString(startDateTime), DateUtil.dateToString(endDateTime),
                 images, organizer.getId(), isMember, isPublic));
         for (UserBaseVO user : participants)
-            buf.append(user.toString());
+            buf.append("\n").append(user.toString());
         return buf.toString();
     }
 
