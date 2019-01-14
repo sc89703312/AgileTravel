@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class RUserActivityEntity {
 
     @EmbeddedId
-    RUserActivityID primaryKey;
+    RUserActivityID id;
 
     @ManyToOne
     @MapsId("userID")
@@ -27,18 +27,9 @@ public class RUserActivityEntity {
     @Column(name = "status")
     int status;
 
-//    public RUserActivityEntity() {}
-//
-//    public RUserActivityEntity(UserEntity user, ActivityEntity activity, int status) {
-//        this.primaryKey = new RUserActivityID(user.getId(), activity.getId());
-//        this.user = user;
-//        this.activity = activity;
-//        this.status = status;
-//    }
-
     public static RUserActivityEntity of(UserEntity user, ActivityEntity activity, int status) {
         RUserActivityEntity entity = new RUserActivityEntity();
-        entity.setPrimaryKey(RUserActivityID.of(user.getId(), activity.getId()));
+        entity.setId(RUserActivityID.of(user.getId(), activity.getId()));
         entity.setUser(user);
         entity.setActivity(activity);
         entity.setStatus(status);

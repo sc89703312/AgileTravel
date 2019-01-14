@@ -20,4 +20,23 @@ public class ActivityMemberServiceTests {
         System.out.println(activityMemberService.checkInvitationCode(7, code));
     }
 
+    @Test
+    public void testMemberOperation() {
+//        assert activityMemberService.applyJoinActivity(9, 1) > 0;
+        System.out.println(activityMemberService.queryApplicants(1, 1));
+//        System.out.println(activityMemberService.queryParticipants(1, 1));
+//        assert activityMemberService.approveApplicant(1, 1, 9) > 0;
+//        System.out.println(activityMemberService.queryApplicants(1, 1));
+//        System.out.println(activityMemberService.queryParticipants(1, 1));
+//        assert activityMemberService.removeParticipant(1, 1, 9) > 0;
+//        System.out.println(activityMemberService.queryApplicants(1, 1));
+//        System.out.println(activityMemberService.queryParticipants(1, 1));
+//        assert activityMemberService.applyJoinActivity(9, 1) > 0;
+//        System.out.println(activityMemberService.queryApplicants(1, 1));
+//        System.out.println(activityMemberService.queryParticipants(1, 1));
+//        assert activityMemberService.refuseApplicant(1, 1, 9) > 0;
+//        System.out.println(activityMemberService.queryApplicants(1, 1));
+//        System.out.println(activityMemberService.queryParticipants(1, 1));
+    }
+
 }
