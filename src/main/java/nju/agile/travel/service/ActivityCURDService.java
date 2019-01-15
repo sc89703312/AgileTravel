@@ -5,6 +5,7 @@ import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.model.ActivityInfoParam;
 import nju.agile.travel.util.Constants;
+import nju.agile.travel.util.DateUtil;
 import nju.agile.travel.vo.ActivityBaseVO;
 import nju.agile.travel.vo.ActivityDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,8 +137,8 @@ public class ActivityCURDService {
         entity.setName(param.getName());
         entity.setDescription(param.getDescription());
         entity.setLocation(param.getLocation());
-        entity.setStartTime(param.getStartTime());
-        entity.setEndTime(param.getEndTime());
+        entity.setStartTime(DateUtil.stringToDate(param.getStartTime()));
+        entity.setEndTime(DateUtil.stringToDate(param.getEndTime()));
         entity.setImageUrls(param.getImageUrls());
         entity.setAccess(param.isPublic() ? Constants.ACTIVITY_PUBLIC : Constants.ACTIVITY_PRIVATE);
         return entity;

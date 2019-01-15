@@ -17,9 +17,9 @@ public class ActivityInfoParam {
 
     String location;
 
-    Date startTime;
+    String startTime;
 
-    Date endTime;
+    String endTime;
 
     List<String> imageUrls;
 
@@ -29,8 +29,8 @@ public class ActivityInfoParam {
             String name,
             String description,
             String location,
-            Date startTime,
-            Date endTime,
+            String startTime,
+            String endTime,
             List<String> imageUrls,
             boolean isPublic) {
         this.name = name;
