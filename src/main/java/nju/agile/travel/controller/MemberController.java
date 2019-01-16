@@ -19,9 +19,14 @@ public class MemberController {
     @Autowired
     ActivityMemberService activityMemberService;
 
-    @GetMapping("/user/{userID}/activity/{activityID}/invite")
-    public String getInvitationCode(@PathVariable Integer userID, @PathVariable Integer activityID) {
+    @GetMapping("/user/{userID}/activity/{activityID}/invite/generate")
+    public String generateInvitationCode(@PathVariable Integer userID, @PathVariable Integer activityID) {
         return activityMemberService.generateInvitationCode(userID, activityID);
+    }
+
+    @GetMapping("/user/{userID}/activity/{activityID}/invite/get")
+    public String getInvitationCode(@PathVariable Integer userID, @PathVariable Integer activityID) {
+        return activityMemberService.queryInvitationCode(userID, activityID);
     }
 
     @GetMapping("/user/{userID}/accept/{invitationCode}")

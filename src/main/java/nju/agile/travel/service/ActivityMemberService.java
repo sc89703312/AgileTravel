@@ -50,6 +50,11 @@ public class ActivityMemberService {
         return Base64Util.encode(activityID, DateUtil.dateToString(invitedAt));
     }
 
+    public String queryInvitationCode(int userID, int activityID) {
+        ActivityEntity activityEntity = getValidCreatorAndActivity(userID, activityID).getSecond();
+        return Base64Util.encode(activityID, DateUtil.dateToString(activityEntity.getInvitedAt()));
+    }
+
     // return activity id if success
     @Transactional
     public int checkInvitationCode(int userID, String invitationCode) {
