@@ -1,6 +1,7 @@
 package nju.agile.travel.controller;
 
 import nju.agile.travel.service.ActivityMemberService;
+import nju.agile.travel.vo.ApplyMessageVO;
 import nju.agile.travel.vo.UserBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ public class MemberController {
     @GetMapping("/user/{userID}/accept/{invitationCode}")
     public int acceptInvitation(@PathVariable Integer userID, @PathVariable String invitationCode) {
         return activityMemberService.checkInvitationCode(userID, invitationCode);
+    }
+
+    @GetMapping("/user/{userID}/message/applicants")
+    public List<ApplyMessageVO> getActivityApplicants(@PathVariable Integer userID) {
+        return activityMemberService.queryApplyMessages(userID);
     }
 
     @GetMapping("/user/{userID}/activity/{activityID}/applicants")

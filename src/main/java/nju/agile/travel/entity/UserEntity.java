@@ -76,8 +76,8 @@ public class UserEntity {
         StringBuilder buf = new StringBuilder();
 
         buf.append(String.format(
-                "User[id=%d, title='%s', email='%s', password='%s', avaUrl='%s', check=%d, wechat='%s']%n",
-                id, name, mail, password, avatarUrl, check, weChat));
+                "User[id=%d, title='%s', email='%s', avaUrl='%s', check=%d, wechat='%s']%n",
+                id, name, mail, avatarUrl, check, weChat));
 
         if (createdActivityList != null) {
             for(ActivityEntity activity : createdActivityList) {

@@ -11,6 +11,7 @@ import nju.agile.travel.util.Base64Util;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
 import nju.agile.travel.vo.ActivityBaseVO;
+import nju.agile.travel.vo.ApplyMessageVO;
 import nju.agile.travel.vo.UserBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Tuple;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -86,6 +88,26 @@ public class ActivityMemberService {
                 .stream()
                 .map(UserBaseVO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<ApplyMessageVO> queryApplyMessages(int userID) {
+        List<ApplyMessageVO> messages = new ArrayList<>();
+        userRepo
+            .findByIdAndCheck(userID, Constants.ACCOUNT_ON)
+            .map(userEntity -> userEntity
+                    .getCreatedActivityList()
+                    .stream()
+                    .map(activityEntity -> activityEntity
+                            .getApplicants()
+                            .stream()
+                            .map(applicantEntity -> messages.add(new ApplyMessageVO(applicantEntity, activityEntity)))
+                            .collect(Collectors.toList())
+                    )
+                    .collect(Collectors.toList())
+            )
+            .orElseThrow(() -> new RuntimeException("用户ID不存在或未过审"));
+        return messages;
     }
 
     @Transactional
