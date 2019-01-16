@@ -135,6 +135,20 @@ public class ActivityMemberService {
     }
 
     @Transactional
+    public int exitActivity(int userID, int activityID) {
+        Pair<UserEntity, ActivityEntity> pair = getValidUserAndActivity(userID, activityID);
+        UserEntity userEntity = pair.getFirst();
+        ActivityEntity activityEntity = pair.getSecond();
+        return rUserActivityRepo
+                .findByIdAndStatus(RUserActivityID.of(userEntity.getId(), activityEntity.getId()), Constants.MEMBER_APPROVED)
+                .map(relationEntity -> {
+                    rUserActivityRepo.delete(relationEntity);
+                    return activityID;
+                })
+                .orElseThrow(() -> new RuntimeException("用户不是目标活动的参与者"));
+    }
+
+    @Transactional
     public int approveApplicant(int userID, int activityID, int applicantID) {
         getValidCreatorAndActivity(userID, activityID);
         return userRepo

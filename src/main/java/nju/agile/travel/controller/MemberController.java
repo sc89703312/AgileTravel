@@ -55,6 +55,11 @@ public class MemberController {
         return activityMemberService.applyJoinActivity(userID, activityID);
     }
 
+    @PostMapping("/user/{userID}/activity/{activityID}/exit")
+    public int exitActivity(@PathVariable Integer userID, @PathVariable Integer activityID) {
+        return activityMemberService.exitActivity(userID, activityID);
+    }
+
     @PostMapping("/user/{userID}/activity/{activityID}/applicants/{applicantID}/approve")
     public int approve(
             @PathVariable Integer userID,
