@@ -19,7 +19,7 @@ public class ShareBaseVO {
     ActivityBaseVO activity;
     int likeNum;
     Boolean isLike;
-    Date dateTime;
+    String dateTime;
 
     public ShareBaseVO(final ShareEntity entity, Integer currentUserId){
         this.id = entity.getId();
@@ -27,7 +27,7 @@ public class ShareBaseVO {
         this.contents = entity.getContent();
         this.activity = new ActivityBaseVO(entity.getBelongedActivity());
         this.likeNum = entity.getStarNum();
-        this.dateTime = entity.getTimestamps();
+        this.dateTime = DateUtil.dateToString(entity.getTimestamps());
         this.isLike = Arrays.asList(
                 entity.getStarUserIds().split(" ")).contains(
                 String.valueOf(currentUserId));
@@ -37,7 +37,7 @@ public class ShareBaseVO {
     public String toString(){
         return String.format(
                 "%nShareBaseVO[id=%d, sharedTime='%s', contents='%s', authorId=%d, activityId=%d, likeNum=%d, isLike='%s']",
-                id, DateUtil.dateToString(dateTime), contents, user.getId(), activity.getId(), likeNum, String.valueOf(isLike)
+                id, dateTime, contents, user.getId(), activity.getId(), likeNum, String.valueOf(isLike)
         );
     }
 

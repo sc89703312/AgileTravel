@@ -22,9 +22,9 @@ public class ActivityBaseVO {
 
     String address;
 
-    Date startDateTime;
+    String startDateTime;
 
-    Date endDateTime;
+    String endDateTime;
 
     String cover;
 
@@ -41,8 +41,8 @@ public class ActivityBaseVO {
         this.title = activityEntity.getName();
         this.description = activityEntity.getDescription();
         this.address = activityEntity.getLocation();
-        this.startDateTime = activityEntity.getStartTime();
-        this.endDateTime = activityEntity.getEndTime();
+        this.startDateTime = DateUtil.dateToString(activityEntity.getStartTime());
+        this.endDateTime = DateUtil.dateToString(activityEntity.getEndTime());
         this.cover = activityEntity.getImageUrls() == null ?
                 "" : Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
         this.comments = activityEntity.getPostNum();
@@ -60,7 +60,7 @@ public class ActivityBaseVO {
         return String.format(
                 "%nActivityBaseVO[id=%d, title=%s, description=%s, address=%s, startDateTime=%s, endDateTime=%s, " +
                         "cover=%s, organizerID=%d, isMember=%d, isPublic=%b]",
-                id, title, description, address, DateUtil.dateToString(startDateTime), DateUtil.dateToString(endDateTime),
+                id, title, description, address, startDateTime, endDateTime,
                 cover, organizer.getId(), isMember, isPublic);
     }
 

@@ -25,9 +25,9 @@ public class ActivityDetailVO {
 
     String address;
 
-    Date startDateTime;
+    String startDateTime;
 
-    Date endDateTime;
+    String endDateTime;
 
     int comments;
 
@@ -46,8 +46,8 @@ public class ActivityDetailVO {
         this.title = activityEntity.getName();
         this.description = activityEntity.getDescription();
         this.address = activityEntity.getLocation();
-        this.startDateTime = activityEntity.getStartTime();
-        this.endDateTime = activityEntity.getEndTime();
+        this.startDateTime = DateUtil.dateToString(activityEntity.getStartTime());
+        this.endDateTime = DateUtil.dateToString(activityEntity.getEndTime());
         this.comments = activityEntity.getPostNum();
         this.isMember = memberStatus;
         this.isPublic = activityEntity.getAccess() == Constants.ACTIVITY_PUBLIC;
@@ -67,7 +67,7 @@ public class ActivityDetailVO {
         buf.append(String.format(
                 "%nActivityDetailedVO[id=%d, title=%s, description=%s, address=%s, startDateTime=%s, endDateTime=%s, " +
                         "images=%s, organizerID=%d, isMember=%d, isPublic=%b]",
-                id, title, description, address, DateUtil.dateToString(startDateTime), DateUtil.dateToString(endDateTime),
+                id, title, description, address, startDateTime, endDateTime,
                 images, organizer.getId(), isMember, isPublic));
         for (UserBaseVO user : participants)
             buf.append("\n").append(user.toString());

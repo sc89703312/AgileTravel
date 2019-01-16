@@ -17,7 +17,7 @@ public class PostBaseVO {
 
     int id;
 
-    Date postedTime;
+    String postedTime;
 
     String content;
 
@@ -27,7 +27,7 @@ public class PostBaseVO {
 
     public PostBaseVO(final PostEntity postEntity){
         this.id = postEntity.getId();
-        this.postedTime = postEntity.getTimestamps();
+        this.postedTime = DateUtil.dateToString(postEntity.getTimestamps());
         this.content = postEntity.getContent();
         this.imageUrls = postEntity.getImageUrls() == null ?
                 new ArrayList<>() :
@@ -39,7 +39,7 @@ public class PostBaseVO {
     public String toString(){
         return String.format(
                 "%nPostBaseVO[id=%d, postedTime='%s', content='%s', authorId=%d, imageUrls='%s']",
-                id, DateUtil.dateToString(postedTime), content, author.getId(), String.join(" ", imageUrls)
+                id, postedTime, content, author.getId(), String.join(" ", imageUrls)
         );
     }
 
