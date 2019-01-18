@@ -33,7 +33,8 @@ public class ActivityEntity {
     @Column(name = "end_time")
     Date endTime;
 
-    @Column(name = "image_urls")
+    @Lob
+    @Column(name = "image_urls", columnDefinition="text")
     String imageUrls;
 
     @Column(name = "[check]")

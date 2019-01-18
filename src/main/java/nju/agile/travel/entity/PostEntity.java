@@ -20,7 +20,8 @@ public class PostEntity {
 
     String content;
 
-    @Column(name = "image_urls")
+    @Lob
+    @Column(name = "image_urls", columnDefinition="text")
     String imageUrls;
 
     @ManyToOne
