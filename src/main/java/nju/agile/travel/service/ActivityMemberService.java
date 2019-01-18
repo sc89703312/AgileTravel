@@ -54,6 +54,8 @@ public class ActivityMemberService {
 
     public String queryInvitationCode(int userID, int activityID) {
         ActivityEntity activityEntity = getValidCreatorAndActivity(userID, activityID).getSecond();
+        if (activityEntity.getInvitedAt() == null)
+            throw new RuntimeException("邀请码未生成");
         return Base64Util.encode(activityID, DateUtil.dateToString(activityEntity.getInvitedAt()));
     }
 
