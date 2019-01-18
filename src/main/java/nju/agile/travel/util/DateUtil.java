@@ -49,4 +49,8 @@ public class DateUtil {
         return dateToString(getCurrentRoundDate());
     }
 
+    public static String getCurrentMillsc(){
+        return String.valueOf(new Date().getTime());
+    }
+
 }
