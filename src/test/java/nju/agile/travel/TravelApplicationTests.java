@@ -88,11 +88,11 @@ public class TravelApplicationTests {
         authService.register(param);
     }
 
-    @Test
-    public void testAuthService(){
-        RegisterParam param = new RegisterParam("141250107@smail.nju.edu.cn", "echo", "123456", "1");
-        authService.register(param);
-    }
+//    @Test
+//    public void testAuthService(){
+//        RegisterParam param = new RegisterParam("141250107@smail.nju.edu.cn", "echo", "123456", "1");
+//        authService.register(param);
+//    }
 
     @Test
     public void testBase64(){
