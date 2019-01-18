@@ -35,21 +35,21 @@ public class AuthServiceTests {
         System.out.println(authService.login(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testLoginWrongPwd(){
         LoginParam param = new LoginParam("sc89703312@qq.com", "1");
         System.out.println(authService.login(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testLoginWrongMail(){
         LoginParam param = new LoginParam("?", "1");
         System.out.println(authService.login(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testLoginUnchecked(){
-        LoginParam param = new LoginParam("2271642660@qq.com", "123456");
+        LoginParam param = new LoginParam("xxxx@qq.com", "123456");
         System.out.println(authService.login(param));
     }
 

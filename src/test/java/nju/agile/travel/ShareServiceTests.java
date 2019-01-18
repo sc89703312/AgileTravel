@@ -26,7 +26,7 @@ public class ShareServiceTests {
     @Autowired
     ShareService shareService;
 
-//    @Test
+    @Test
     public void testShareRepo(){
         System.out.println(shareRepo.findAllByOrderByStarNumAsc());
         System.out.println(shareRepo.findAllByOrderByStarNumDesc());
@@ -35,7 +35,7 @@ public class ShareServiceTests {
         System.out.println(shareRepo.findAllByOrderByTimestampsDesc());
     }
 
-//    @Test
+    @Test
     public void testQueryAll(){
         System.out.println(shareService.queryShareList(1));
         System.out.println(shareService.queryShareList(2));
@@ -48,21 +48,21 @@ public class ShareServiceTests {
         System.out.println(shareService.share(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testShareUserInvalid(){
-        ShareInfoParam param = new ShareInfoParam(100, "hehe", 1);
+        ShareInfoParam param = new ShareInfoParam(1000, "hehe", 1);
         System.out.println(shareService.share(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testShareActivityInvalid(){
-        ShareInfoParam param = new ShareInfoParam(1, "hehe", 100);
+        ShareInfoParam param = new ShareInfoParam(1, "hehe", 1000);
         System.out.println(shareService.share(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testShareUserNotJoined(){
-        ShareInfoParam param = new ShareInfoParam(3, "hehe", 1);
+        ShareInfoParam param = new ShareInfoParam(8, "hehe", 24);
         System.out.println(shareService.share(param));
     }
 
@@ -72,7 +72,7 @@ public class ShareServiceTests {
         shareService.star(1,2); //not works
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testShareStarInvalidShare(){
         shareService.star(2, 100);
     }

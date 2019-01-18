@@ -58,13 +58,6 @@ public class TravelApplicationTests {
         System.out.println(serverPort);
     }
 
-//    @Test
-//    public void testSendMail() {
-//        String toAddress = "MF1832136@smail.nju.edu.cn";
-//        String content = "中文";
-//        mailService.sendEmail(toAddress, content);
-//    }
-
     @Test
     @Transactional
     public void testUserRepo(){
@@ -89,9 +82,15 @@ public class TravelApplicationTests {
         System.out.println(shareRepo.findAll());
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testAuthServiceExistAccount(){
+        RegisterParam param = new RegisterParam("2271642660@qq.com", "echo", "123456", "1");
+        authService.register(param);
+    }
+
     @Test
     public void testAuthService(){
-        RegisterParam param = new RegisterParam("2271642660@qq.com", "echo", "123456", "1");
+        RegisterParam param = new RegisterParam("141250107@smail.nju.edu.cn", "echo", "123456", "1");
         authService.register(param);
     }
 
@@ -105,17 +104,10 @@ public class TravelApplicationTests {
         System.out.println(decodedStr);
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testAccountCheck(){
        authService.check(9,"OSAyMDE5LTAxLTExIDE1OjA3OjM3");
     }
-
-//    @Test
-//    @Transactional
-//    public void testActivityEntity() {
-//        ActivityEntity entity = activityRepo.findById(1).get();
-//        System.out.println(entity.getCreatorAndParticipants());
-//    }
 
 }
 

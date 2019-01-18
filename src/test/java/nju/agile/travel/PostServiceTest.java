@@ -44,21 +44,21 @@ public class PostServiceTest {
         System.out.println(postService.post(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testCreatePostInvalidAuthor(){
-        PostInfoParam param = new PostInfoParam(100, 1, "post content", Arrays.asList("url1", "url2"));
+        PostInfoParam param = new PostInfoParam(1000, 1, "post content", Arrays.asList("url1", "url2"));
         System.out.println(postService.post(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testCreatePostInvalidActivity(){
-        PostInfoParam param = new PostInfoParam(2, 100, "post content", Arrays.asList("url1", "url2"));
+        PostInfoParam param = new PostInfoParam(2, 1000, "post content", Arrays.asList("url1", "url2"));
         System.out.println(postService.post(param));
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testCreatePostNotJoined(){
-        PostInfoParam param = new PostInfoParam(9, 1, "post content", Arrays.asList("url1", "url2"));
+        PostInfoParam param = new PostInfoParam(9, 24, "post content", Arrays.asList("url1", "url2"));
         System.out.println(postService.post(param));
     }
 
