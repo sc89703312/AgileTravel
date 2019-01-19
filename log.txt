@@ -1,0 +1,4 @@
+[2019-01-19 14:47:12] [ERROR] - nju.agile.travel.controller.WebConfig.addCorsMappings have no ServletRequestAttributes
+[2019-01-19 14:56:36] [ERROR] - nju.agile.travel.controller.WebConfig.addCorsMappings have no ServletRequestAttributes
+[2019-01-19 15:00:37] [ERROR] - nju.agile.travel.controller.WebConfig.addCorsMappings have no ServletRequestAttributes
+[2019-01-19 15:02:11] [ERROR] - nju.agile.travel.controller.WebConfig.addCorsMappings have no ServletRequestAttributes
