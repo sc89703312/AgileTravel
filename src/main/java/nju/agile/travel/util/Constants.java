@@ -19,4 +19,7 @@ public class Constants {
 
     public static final Integer PAGE_SIZE = 10;
     public static final String KEY = "$*^@!#";
+
+    public static final String defaultAvatarUrl = "https://agile-travel.oss-cn-shanghai.aliyuncs.com/avatar/IMG_2273.JPG";
+    public static final String defaultCoverUrl = "http://agile-travel.oss-cn-shanghai.aliyuncs.com/images/yYTfFTefFF.jpg";
 }

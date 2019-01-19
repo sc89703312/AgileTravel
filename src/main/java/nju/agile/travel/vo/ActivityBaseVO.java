@@ -4,9 +4,9 @@ import lombok.Data;
 import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Created by ShirokoSama on 2019/1/10.
@@ -43,8 +43,10 @@ public class ActivityBaseVO {
         this.address = activityEntity.getLocation();
         this.startDateTime = DateUtil.dateToString(activityEntity.getStartTime());
         this.endDateTime = DateUtil.dateToString(activityEntity.getEndTime());
-        this.cover = activityEntity.getImageUrls() == null ?
-                "" : Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
+        if (activityEntity.getImageUrls() != null && !activityEntity.getImageUrls().equals(""))
+            this.cover = Arrays.asList(activityEntity.getImageUrls().split("\\s")).get(0);
+        else
+            this.cover = Constants.defaultCoverUrl;
         this.comments = activityEntity.getPostNum();
         this.isPublic = activityEntity.getAccess() == Constants.ACTIVITY_PUBLIC;
         this.organizer = new UserBaseVO(activityEntity.getCreator());

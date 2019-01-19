@@ -2,6 +2,8 @@ package nju.agile.travel.vo;
 
 import lombok.Data;
 import nju.agile.travel.entity.UserEntity;
+import nju.agile.travel.util.Constants;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Created by ShirokoSama on 2019/1/10.
@@ -23,7 +25,10 @@ public class UserBaseVO {
         this.id = userEntity.getId();
         this.username = userEntity.getName();
         this.email = userEntity.getMail();
-        this.avaUrl = userEntity.getAvatarUrl();
+        if (userEntity.getAvatarUrl() != null && !userEntity.getAvatarUrl().equals(""))
+            this.avaUrl = userEntity.getAvatarUrl();
+        else
+            this.avaUrl = Constants.defaultAvatarUrl;
         this.weChat = userEntity.getWeChat();
     }
 

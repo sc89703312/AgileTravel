@@ -7,7 +7,7 @@ import nju.agile.travel.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,9 +51,10 @@ public class ActivityDetailVO {
         this.comments = activityEntity.getPostNum();
         this.isMember = memberStatus;
         this.isPublic = activityEntity.getAccess() == Constants.ACTIVITY_PUBLIC;
-        this.images = activityEntity.getImageUrls() == null ?
-                new ArrayList<>() :
-                Arrays.asList(activityEntity.getImageUrls().split("\\s"));
+        if (activityEntity.getImageUrls() != null && !activityEntity.getImageUrls().equals(""))
+            this.images = Arrays.asList(activityEntity.getImageUrls().split("\\s"));
+        else
+            this.images = Collections.singletonList(Constants.defaultCoverUrl);
         this.organizer = new UserBaseVO(activityEntity.getCreator());
         this.participants = activityEntity.getParticipants()
                 .stream()
