@@ -67,6 +67,9 @@ public class ActivityEntity {
     @OneToMany(mappedBy = "activity")
     Set<RUserActivityEntity> userActivityRelations;
 
+    @OneToMany(mappedBy = "activity")
+    Set<MessageEntity> messages;
+
     public Set<UserEntity> getCreatorAndParticipants() {
         Set<UserEntity> users = new HashSet<>(participants);
         users.add(creator);

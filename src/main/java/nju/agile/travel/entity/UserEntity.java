@@ -71,6 +71,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     Set<RUserActivityEntity> userActivityRelations;
 
+    @OneToMany(mappedBy = "user")
+    Set<MessageEntity> messages;
+
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
