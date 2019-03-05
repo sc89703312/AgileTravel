@@ -144,8 +144,16 @@ public class ActivityCURDService {
         return entity;
     }
 
-//    public List<ActivityBaseVO> searchActivity(String pattern) {
-//
-//    }
+    public List<ActivityBaseVO> searchActivity(int userID, String pattern) {
+        return userRepo
+                .findById(userID)
+                .map(userEntity ->
+                        activityRepo
+                        .findAllByPattern(pattern)
+                        .stream()
+                        .map(ActivityBaseVO::new)
+                        .collect(Collectors.toList()))
+                .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+    }
 
 }

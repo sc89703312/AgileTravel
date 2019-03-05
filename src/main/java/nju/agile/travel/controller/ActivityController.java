@@ -56,4 +56,11 @@ public class ActivityController {
         return activityCURDService.editActivity(userID, activityID, param);
     }
 
+    @PostMapping("/user/{userID}/activity/search/{pattern}")
+    public List<ActivityBaseVO> searchMatchingActivity(
+            @PathVariable Integer userID,
+            @PathVariable String pattern) {
+        return activityCURDService.searchActivity(userID, pattern);
+    }
+
 }

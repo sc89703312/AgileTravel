@@ -36,7 +36,7 @@ public class ActivityBaseVO {
 
     UserBaseVO organizer;
 
-    ActivityBaseVO(ActivityEntity activityEntity) {
+    public ActivityBaseVO(ActivityEntity activityEntity) {
         this.id = activityEntity.getId();
         this.title = activityEntity.getName();
         this.description = activityEntity.getDescription();
