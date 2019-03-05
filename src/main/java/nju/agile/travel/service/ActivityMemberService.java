@@ -18,7 +18,6 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

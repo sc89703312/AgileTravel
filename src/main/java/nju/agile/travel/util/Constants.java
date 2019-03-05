@@ -17,6 +17,14 @@ public class Constants {
     public static final Integer MEMBER_CREATOR = 2;
     public static final Integer MEMBER_NONE = 3;
 
+    // message types
+    public static final Integer ACTIVITY_CHECKED = 0;
+    public static final Integer ACTIVITY_BANNED = 1;
+    public static final Integer USER_CHECKED = 2;
+    public static final Integer USER_BANNED = 3;
+    public static final Integer APPLY_APPROVED = 4;
+    public static final Integer APPLY_REFUSED = 5;
+
     public static final Integer PAGE_SIZE = 10;
     public static final String KEY = "$*^@!#";
 
