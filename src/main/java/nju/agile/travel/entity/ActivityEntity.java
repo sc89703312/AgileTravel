@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Entity(name = "t_activity")
 @Data
-@EqualsAndHashCode(exclude = {"posts", "participants", "applicants", "userActivityRelations"})
+@EqualsAndHashCode(exclude = {"posts", "participants", "applicants", "userActivityRelations", "messages"})
 public class ActivityEntity {
 
     @Id

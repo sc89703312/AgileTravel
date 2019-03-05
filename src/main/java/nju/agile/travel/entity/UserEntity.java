@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Entity(name = "t_user")
 @Data
-@EqualsAndHashCode(exclude = {"createdActivityList", "joinedActivityList", "applyingActivityList", "userActivityRelations"})
+@EqualsAndHashCode(exclude = {"createdActivityList", "joinedActivityList", "applyingActivityList", "userActivityRelations", "messages"})
 public class UserEntity {
 
     @Id
