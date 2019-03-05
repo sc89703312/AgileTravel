@@ -144,4 +144,8 @@ public class ActivityCURDService {
         return entity;
     }
 
+//    public List<ActivityBaseVO> searchActivity(String pattern) {
+//
+//    }
+
 }

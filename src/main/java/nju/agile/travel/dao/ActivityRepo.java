@@ -4,7 +4,10 @@ import nju.agile.travel.entity.ActivityEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,5 +20,9 @@ public interface ActivityRepo extends JpaRepository<ActivityEntity, Integer> {
     Optional<ActivityEntity> findByIdAndCheck(int id, int check);
 
     Optional<ActivityEntity> findByIdAndCheckAndAccess(int id, int check, int access);
+
+    @Query("select a from t_activity a where a.name like concat('%',:pattern,'%') " +
+            "or a.location like concat('%',:pattern,'%') or a.description like concat('%',:pattern,'%')")
+    List<ActivityEntity> findAllByPattern(@Param("pattern") String pattern);
 
 }
