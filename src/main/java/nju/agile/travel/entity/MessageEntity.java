@@ -23,14 +23,17 @@ public class MessageEntity {
     @JoinColumn(name = "t_activity_id")
     ActivityEntity activity;
 
+    @Column(name = "content_user_id")
+    int contentUserID;
+
     @Column(name = "type")
     int type;
 
     @Override
     public String toString() {
         return String.format(
-                "MessageEntity[uid=%d, aid=%d, type=%d]%n",
-                this.getUser().getId(), this.getActivity().getId(), this.getType()
+                "MessageEntity[uid=%d, aid=%d, cuid=%d, type=%d]%n",
+                this.getUser().getId(), this.getActivity().getId(), this.getContentUserID(), this.getType()
         );
     }
 

@@ -24,6 +24,7 @@ public class Constants {
     public static final Integer USER_BANNED = 3;
     public static final Integer APPLY_APPROVED = 4;
     public static final Integer APPLY_REFUSED = 5;
+    public static final Integer MEMBER_EXIT = 6;
 
     public static final Integer PAGE_SIZE = 10;
     public static final String KEY = "$*^@!#";

@@ -1,16 +1,13 @@
 package nju.agile.travel.service;
 
 import nju.agile.travel.dao.ActivityRepo;
+import nju.agile.travel.dao.MessageRepo;
 import nju.agile.travel.dao.RUserActivityRepo;
 import nju.agile.travel.dao.UserRepo;
-import nju.agile.travel.entity.ActivityEntity;
-import nju.agile.travel.entity.RUserActivityEntity;
-import nju.agile.travel.entity.RUserActivityID;
-import nju.agile.travel.entity.UserEntity;
+import nju.agile.travel.entity.*;
 import nju.agile.travel.util.Base64Util;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
-import nju.agile.travel.vo.ActivityBaseVO;
 import nju.agile.travel.vo.ApplyMessageVO;
 import nju.agile.travel.vo.UserBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +36,9 @@ public class ActivityMemberService {
 
     @Autowired
     RUserActivityRepo rUserActivityRepo;
+
+    @Autowired
+    MessageRepo messageRepo;
 
     private static final Pattern pattern = Pattern.compile("(\\d+?)\\s(.*)");
 
@@ -143,7 +143,15 @@ public class ActivityMemberService {
         return rUserActivityRepo
                 .findByIdAndStatus(RUserActivityID.of(userEntity.getId(), activityEntity.getId()), Constants.MEMBER_APPROVED)
                 .map(relationEntity -> {
+                    // update user-activity relationship table
                     rUserActivityRepo.delete(relationEntity);
+                    // insert message to applicant's message table
+                    MessageEntity message = new MessageEntity();
+                    message.setUser(userEntity);
+                    message.setActivity(activityEntity);
+                    message.setContentUserID(relationEntity.getUser().getId());
+                    message.setType(Constants.MEMBER_EXIT);
+                    messageRepo.save(message);
                     return activityID;
                 })
                 .orElseThrow(() -> new RuntimeException("用户不是目标活动的参与者"));
@@ -151,14 +159,22 @@ public class ActivityMemberService {
 
     @Transactional
     public int approveApplicant(int userID, int activityID, int applicantID) {
-        getValidCreatorAndActivity(userID, activityID);
+        Pair<UserEntity, ActivityEntity> pair = getValidCreatorAndActivity(userID, activityID);
+        ActivityEntity activityEntity = pair.getSecond();
         return userRepo
                 .findByIdAndCheck(applicantID, Constants.ACCOUNT_ON)
                 .map(applicantEntity -> rUserActivityRepo
                         .findByIdAndStatus(RUserActivityID.of(applicantID, activityID), Constants.MEMBER_APPLYING)
                         .map(relationEntity -> {
+                            // update user-activity relationship table
                             relationEntity.setStatus(Constants.MEMBER_APPROVED);
                             rUserActivityRepo.save(relationEntity);
+                            // insert message to applicant's message table
+                            MessageEntity message = new MessageEntity();
+                            message.setUser(applicantEntity);
+                            message.setActivity(activityEntity);
+                            message.setType(Constants.APPLY_APPROVED);
+                            messageRepo.save(message);
                             return applicantID;
                         })
                         .orElseThrow(() -> new RuntimeException("目标用户不在申请队列中"))
@@ -168,11 +184,19 @@ public class ActivityMemberService {
 
     @Transactional
     public int refuseApplicant(int userID, int activityID, int applicantID) {
-        getValidCreatorAndActivity(userID, activityID);
+        Pair<UserEntity, ActivityEntity> pair = getValidCreatorAndActivity(userID, activityID);
+        ActivityEntity activityEntity = pair.getSecond();
         return rUserActivityRepo
                 .findByIdAndStatus(RUserActivityID.of(applicantID, activityID), Constants.MEMBER_APPLYING)
                 .map(relationEntity -> {
+                    // update user-activity relationship table
                     rUserActivityRepo.delete(relationEntity);
+                    // insert message to applicant's message table
+                    MessageEntity message = new MessageEntity();
+                    message.setUser(relationEntity.getUser());
+                    message.setActivity(activityEntity);
+                    message.setType(Constants.APPLY_REFUSED);
+                    messageRepo.save(message);
                     return applicantID;
                 })
                 .orElseThrow(() -> new RuntimeException("目标用户不在申请队列中"));
