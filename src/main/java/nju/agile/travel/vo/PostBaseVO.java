@@ -29,7 +29,8 @@ public class PostBaseVO {
         this.id = postEntity.getId();
         this.postedTime = DateUtil.dateToString(postEntity.getTimestamps());
         this.content = postEntity.getContent();
-        this.imageUrls = postEntity.getImageUrls() == null ?
+        this.imageUrls = (postEntity.getImageUrls() == null
+                || postEntity.getImageUrls().isEmpty()) ?
                 new ArrayList<>() :
                 Arrays.asList(postEntity.getImageUrls().split(" "));
         this.author = new UserBaseVO(postEntity.getAuthor());

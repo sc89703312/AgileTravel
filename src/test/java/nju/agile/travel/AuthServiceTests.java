@@ -53,4 +53,15 @@ public class AuthServiceTests {
         System.out.println(authService.login(param));
     }
 
+//    @Test
+//    public void modifyInvalidPassword(){
+//        userRepo.findById(3).map(
+//                userEntity -> {
+//                    userEntity.setPassword("123456");
+//                    userRepo.save(userEntity);
+//                    return null;
+//                }
+//        );
+//    }
+
 }
