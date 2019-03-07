@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import nju.agile.travel.util.Constants;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.WhereJoinTable;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -72,6 +73,7 @@ public class UserEntity {
     Set<RUserActivityEntity> userActivityRelations;
 
     @OneToMany(mappedBy = "user")
+    @OrderBy("id desc")
     Set<MessageEntity> messages;
 
     @Override
