@@ -21,8 +21,10 @@ public interface ActivityRepo extends JpaRepository<ActivityEntity, Integer> {
 
     Optional<ActivityEntity> findByIdAndCheckAndAccess(int id, int check, int access);
 
-    @Query("select a from t_activity a where a.name like concat('%',:pattern,'%') " +
-            "or a.location like concat('%',:pattern,'%') or a.description like concat('%',:pattern,'%')")
-    List<ActivityEntity> findAllByPattern(@Param("pattern") String pattern);
+    @Query("select a from t_activity a where a.check = :check and a.access = :access and (a.name like concat('%',:pattern,'%') " +
+            "or a.location like concat('%',:pattern,'%') or a.description like concat('%',:pattern,'%'))")
+    List<ActivityEntity> findAllByPatternAndCheckAndAccess(@Param("pattern") String pattern,
+                                                           @Param("check") int check,
+                                                           @Param("access") int access);
 
 }

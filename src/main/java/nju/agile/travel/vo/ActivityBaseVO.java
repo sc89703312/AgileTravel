@@ -4,7 +4,6 @@ import lombok.Data;
 import nju.agile.travel.entity.ActivityEntity;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 

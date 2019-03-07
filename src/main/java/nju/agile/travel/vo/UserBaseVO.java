@@ -3,7 +3,6 @@ package nju.agile.travel.vo;
 import lombok.Data;
 import nju.agile.travel.entity.UserEntity;
 import nju.agile.travel.util.Constants;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Created by ShirokoSama on 2019/1/10.

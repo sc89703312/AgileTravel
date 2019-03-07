@@ -3,6 +3,7 @@ package nju.agile.travel.service;
 import nju.agile.travel.dao.ActivityRepo;
 import nju.agile.travel.dao.UserRepo;
 import nju.agile.travel.entity.ActivityEntity;
+import nju.agile.travel.entity.UserEntity;
 import nju.agile.travel.model.ActivityInfoParam;
 import nju.agile.travel.util.Constants;
 import nju.agile.travel.util.DateUtil;
@@ -61,16 +62,7 @@ public class ActivityCURDService {
                         .findByCheckAndAccess(Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC, PageRequest.of(pageIndex, Constants.PAGE_SIZE))
                         .getContent()
                         .stream()
-                        .map(activityEntity -> {
-                            if (userEntity.getApplyingActivityList().contains(activityEntity))
-                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPLYING);
-                            else if (userEntity.getJoinedActivityList().contains(activityEntity))
-                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPROVED);
-                            else if (userEntity.getCreatedActivityList().contains(activityEntity))
-                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_CREATOR);
-                            else
-                                return new ActivityBaseVO(activityEntity, Constants.MEMBER_NONE);
-                        })
+                        .map(activityEntity -> formatActivityBaseVO(activityEntity, userEntity))
                         .collect(Collectors.toList())
                 )
                 .orElseThrow(() -> new RuntimeException("用户ID不存在"));
@@ -149,11 +141,22 @@ public class ActivityCURDService {
                 .findById(userID)
                 .map(userEntity ->
                         activityRepo
-                        .findAllByPattern(pattern)
+                        .findAllByPatternAndCheckAndAccess(pattern, Constants.ACTIVITY_ON, Constants.ACTIVITY_PUBLIC)
                         .stream()
-                        .map(ActivityBaseVO::new)
+                        .map(activityEntity -> formatActivityBaseVO(activityEntity, userEntity))
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new RuntimeException("用户ID不存在"));
+    }
+
+    private ActivityBaseVO formatActivityBaseVO(ActivityEntity activityEntity, UserEntity userEntity) {
+        if (userEntity.getApplyingActivityList().contains(activityEntity))
+            return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPLYING);
+        else if (userEntity.getJoinedActivityList().contains(activityEntity))
+            return new ActivityBaseVO(activityEntity, Constants.MEMBER_APPROVED);
+        else if (userEntity.getCreatedActivityList().contains(activityEntity))
+            return new ActivityBaseVO(activityEntity, Constants.MEMBER_CREATOR);
+        else
+            return new ActivityBaseVO(activityEntity, Constants.MEMBER_NONE);
     }
 
 }
