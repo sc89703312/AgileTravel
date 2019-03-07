@@ -29,6 +29,15 @@ public class MessageEntity {
     @Column(name = "type")
     int type;
 
+    static public MessageEntity of(UserEntity userEntity, ActivityEntity activityEntity, int contentUserID, int type) {
+        MessageEntity entity = new MessageEntity();
+        entity.setUser(userEntity);
+        entity.setActivity(activityEntity);
+        entity.setContentUserID(contentUserID);
+        entity.setType(type);
+        return entity;
+    }
+
     @Override
     public String toString() {
         return String.format(
